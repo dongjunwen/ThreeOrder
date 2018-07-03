@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/7/3 17:21:02                            */
+/* Created on:     2018/7/3 18:08:44                            */
 /*==============================================================*/
 
 
@@ -48,7 +48,7 @@ create table tb_item
    sell_point           varchar(500) comment '商品卖点',
    price                decimal(16,2) comment '单价',
    num                  decimal(16,2) comment '数量',
-   barcode              varchar(128) comment '条形码',
+   bar_code             varchar(128) comment '条形码',
    pic_url              varchar(128) comment '图片',
    cat_no               varchar(128) comment '所属类目',
    status               int default 1 comment '状态 0:无效 1:有效',
