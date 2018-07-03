@@ -10,5 +10,5 @@
 * 首先执行 mvn clean install -Dmaven.test.skip=true
 * 到order-rest的target目录 找到order-rest.jar包
 * 执行 nohup java -jar order-rest.jar >> nohup-order.out & 即可
-* 打开 http://127.0.0.1:9006//swagger-ui.html 就能看到调试页面
+* 打开 http://127.0.0.1:9007/swagger-ui.html 就能看到调试页面
 
