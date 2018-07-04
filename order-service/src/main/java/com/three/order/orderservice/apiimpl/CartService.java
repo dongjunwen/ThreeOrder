@@ -1,6 +1,7 @@
 package com.three.order.orderservice.apiimpl;
 
 import com.three.order.orderapi.api.ICartService;
+import com.three.order.orderapi.result.OrderResult;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,4 +12,23 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class CartService implements ICartService {
+    @Override
+    public OrderResult addCartItem(Long itemId, Integer num) {
+        return null;
+    }
+
+    @Override
+    public OrderResult getCartItemList(String userNo) {
+        return null;
+    }
+
+    @Override
+    public OrderResult updateCartItem(Long itemId, Integer num) {
+        return null;
+    }
+
+    @Override
+    public OrderResult deleteCartItem(Long itemId) {
+        return null;
+    }
 }

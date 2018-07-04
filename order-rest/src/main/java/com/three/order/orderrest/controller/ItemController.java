@@ -2,6 +2,7 @@ package com.three.order.orderrest.controller;
 
 import com.three.order.orderapi.api.IItemService;
 import com.three.order.orderapi.result.OrderResult;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description:商品服务接口
  */
 @RestController
-@RequestMapping("/item")
+@RequestMapping("/api/item")
+@Api(tags = "商品",description = "商品相关api")
 public class ItemController {
 
     @Autowired

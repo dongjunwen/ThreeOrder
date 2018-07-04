@@ -15,7 +15,7 @@
 		<groupId>com.three.order</groupId>
 		<artifactId>order</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<properties>
@@ -49,6 +49,24 @@
 			<artifactId>order-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.three.order</groupId>
+			<artifactId>order-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
