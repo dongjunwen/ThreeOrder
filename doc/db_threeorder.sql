@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/7/3 18:08:44                            */
+/* Created on:     2018/7/6 13:27:49                            */
 /*==============================================================*/
 
 
@@ -184,7 +184,7 @@ alter table tb_order_shipping comment '订单物流信息表';
 /*==============================================================*/
 create table tb_user
 (
-   id                   int not null comment '自增主键ID',
+   id                   int not null auto_increment comment '自增主键ID',
    user_no              VARCHAR(32) comment '用户编号',
    user_name            VARCHAR(64) comment '用户名称',
    nick_name            VARCHAR(64) comment '昵称',

@@ -8,6 +8,7 @@ import com.three.order.orderapi.vo.TbUserVo;
 import com.three.order.ordercommon.utils.IDUtils;
 import com.three.order.orderrest.validator.ValidatorUtil;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class UserController {
     public OrderResult<Integer> createUser(@RequestBody TbUserVo tbUserVo){
         ValidatorUtil.validateEntity(tbUserVo);//校验用户实体字段，
         try{
+            if(StringUtils.isEmpty(tbUserVo.getEmailAddr())
+                    &&StringUtils.isEmpty(tbUserVo.getPhoneNum())
+                    &&StringUtils.isEmpty(tbUserVo.getNickName())
+                    ){
+                return OrderResult.newError(ResultCode.USER_REGIST_CHECK_ERROR);
+            }
+
             OrderResult<Integer> _result=iUserService.createUser(tbUserVo);
             if(!_result.isSuccess()){
                 return OrderResult.newError(_result.getRetCode(),_result.getRetMsg());
