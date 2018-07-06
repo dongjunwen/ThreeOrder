@@ -1,15 +1,19 @@
 package com.three.order.orderrest.controller;
 
 import com.three.order.orderapi.api.ICartService;
+import com.three.order.orderapi.enums.ResultCode;
 import com.three.order.orderapi.result.OrderResult;
+import com.three.order.orderapi.vo.CartItemVo;
+import com.three.order.orderrest.service.CartRestService;
+import com.three.order.orderrest.utils.RequestUtils;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author: luiz
@@ -20,31 +24,69 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/cart")
 @Api(tags = "购物车",description = "购物车相关api")
 public class CartController {
+    private static final Logger logger= LoggerFactory.getLogger(CartController.class);
 
     @Autowired
     private ICartService iCartService;
+    @Autowired
+    CartRestService cartRestService;
 
-    @RequestMapping("/add/{itemId}")
-    public OrderResult addCartItem(@PathVariable Long itemId, @RequestParam(defaultValue = "1") Integer num) {
-        OrderResult orderResult = iCartService.addCartItem(itemId, num);
-        return orderResult;
+    @PostMapping("/add")
+    public OrderResult addCartItem(@RequestBody CartItemVo cartItemVo,HttpServletRequest request,HttpServletResponse response) {
+        try{
+            if(RequestUtils.isLogin(request)){
+                return  iCartService.addCartItem(cartItemVo.getItemNo(),cartItemVo.getItemNum());
+            }else{
+                return cartRestService.addCartItem(cartItemVo,request,response);
+            }
+        }catch (Exception e){
+            logger.error("[购物车]添加商品发生异常:{}",e);
+            return OrderResult.newError(ResultCode.FAIL);
+        }
     }
 
-    @RequestMapping("/cart")
+    @RequestMapping("/findList")
     public OrderResult getCartItemList(HttpServletRequest request) {
-        String userNo="";
-        OrderResult orderResult = iCartService.getCartItemList(userNo);
-        return orderResult;
+        try{
+            OrderResult orderResult=OrderResult.newSuccess();
+            if(RequestUtils.isLogin(request)){//待实现
+                return null;
+            }else {
+                orderResult.setData(cartRestService.getCartItemList(request));
+            }
+            return orderResult;
+        }catch (Exception e){
+            logger.error("[购物车]查询购物车列表发生异常:{}",e);
+            return OrderResult.newError(ResultCode.FAIL);
+        }
     }
 
-    @RequestMapping("/update/num/{itemId}/{num}")
-    public OrderResult updateCartItem(@PathVariable Long itemId, @PathVariable Integer num) {
-        return  iCartService.updateCartItem(itemId, num);
+    @PostMapping("/updateCart")
+    public OrderResult updateCartItem(@RequestBody CartItemVo cartItemVo,HttpServletRequest request, HttpServletResponse response) {
+        try{
+            if(RequestUtils.isLogin(request)){//待实现
+                return null;
+            }else{
+                return  cartRestService.updateCartItem(cartItemVo.getItemNo(), cartItemVo.getItemNum(),request,response);
+            }
+        }catch (Exception e){
+            logger.error("[购物车]更新购物车发生异常:{}",e);
+            return OrderResult.newError(ResultCode.FAIL);
+        }
     }
 
     @RequestMapping("/delete/{itemId}")
-    public OrderResult deleteCartItem(@PathVariable Long itemId) {
-        return  iCartService.deleteCartItem(itemId);
+    public OrderResult deleteCartItem(@PathVariable String itemNo,HttpServletRequest request, HttpServletResponse response) {
+        try{
+            if(RequestUtils.isLogin(request)){//待实现
+                return null;
+            }else{
+                return  cartRestService.deleteCartItem(itemNo,request,response);
+            }
+        }catch (Exception e){
+            logger.error("[购物车]删除购物车发生异常:{}",e);
+            return OrderResult.newError(ResultCode.FAIL);
+        }
     }
 
 }

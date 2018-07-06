@@ -26,4 +26,16 @@ public class RequestUtils {
         return tbUserResultVo;
     }
 
+    /**
+     * 当前用户是否登录
+     * @param request
+     * @return
+     */
+    public static boolean isLogin(HttpServletRequest request){
+        if(getCurrentUser(request)==null){
+            return false;
+        }
+        return true;
+    }
+
 }

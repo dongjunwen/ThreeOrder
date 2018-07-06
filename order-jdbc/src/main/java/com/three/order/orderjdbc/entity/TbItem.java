@@ -4,6 +4,7 @@ package com.three.order.orderjdbc.entity;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Component
@@ -18,8 +19,8 @@ public class TbItem {
   private String itemTitle;
   @Column(name = "sell_point")
   private String sellPoint;
-  private double price;
-  private double num;
+  private BigDecimal price;
+  private BigDecimal num;
   @Column(name = "bar_code")
   private String barcode;
   @Column(name = "pic_url")
@@ -69,20 +70,20 @@ public class TbItem {
   }
 
 
-  public double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(double price) {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 
 
-  public double getNum() {
+  public BigDecimal getNum() {
     return num;
   }
 
-  public void setNum(double num) {
+  public void setNum(BigDecimal num) {
     this.num = num;
   }
 

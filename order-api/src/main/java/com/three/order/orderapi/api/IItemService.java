@@ -9,9 +9,9 @@ import com.three.order.orderapi.result.OrderResult;
  * @Modify :
  **/
 public interface IItemService {
-    OrderResult getItemBase(Long itemId);
+    OrderResult getItemBase(String itemNo);
 
-    OrderResult getItemDesc(Long itemId);
+    OrderResult getItemDesc(String itemNo);
 
-    OrderResult getItemParam(Long itemId);
+    OrderResult getItemParam(String itemNo);
 }

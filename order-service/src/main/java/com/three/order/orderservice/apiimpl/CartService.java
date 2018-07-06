@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartService implements ICartService {
     @Override
-    public OrderResult addCartItem(Long itemId, Integer num) {
+    public OrderResult addCartItem(String itemId, Integer num) {
         return null;
     }
 
@@ -23,12 +23,12 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public OrderResult updateCartItem(Long itemId, Integer num) {
+    public OrderResult updateCartItem(String itemId, Integer num) {
         return null;
     }
 
     @Override
-    public OrderResult deleteCartItem(Long itemId) {
+    public OrderResult deleteCartItem(String itemId) {
         return null;
     }
 }
