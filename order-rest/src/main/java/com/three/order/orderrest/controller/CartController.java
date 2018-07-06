@@ -5,6 +5,9 @@ import com.three.order.orderapi.result.OrderResult;
 import com.three.order.orderapi.vo.CartItemVo;
 import com.three.order.orderrest.service.CartRestService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ public class CartController {
     CartRestService cartRestService;
 
     @PostMapping("/add")
+    @ApiOperation(value="购物车添加商品", notes="购物车添加商品")
+    @ApiParam(name = "cartItemVo", value = "商品实体 cartItemVo",required = true)
     public OrderResult addCartItem(@RequestBody CartItemVo cartItemVo,HttpServletRequest request,HttpServletResponse response) {
         try{
             return cartRestService.addCartItem(cartItemVo,request,response);
@@ -38,6 +43,7 @@ public class CartController {
     }
 
     @GetMapping("/findList")
+    @ApiOperation(value="购物车列表查询", notes="购物车列表查询")
     public OrderResult getCartItemList(HttpServletRequest request) {
         try{
             OrderResult orderResult=OrderResult.newSuccess();
@@ -50,6 +56,8 @@ public class CartController {
     }
 
     @PostMapping("/update")
+    @ApiOperation(value="购物车商品数量更新", notes="购物车商品数量更新")
+    @ApiParam(name = "cartItemVo", value = "商品实体 cartItemVo",required = true)
     public OrderResult updateCartItem(@RequestBody CartItemVo cartItemVo,HttpServletRequest request, HttpServletResponse response) {
         try{
            return  cartRestService.updateCartItem(cartItemVo.getItemNo(), cartItemVo.getItemNum(),request,response);
@@ -60,6 +68,8 @@ public class CartController {
     }
 
     @PostMapping("/delete/{itemNo}")
+    @ApiOperation(value="删除购物车内商品", notes="删除购物车内商品")
+    @ApiImplicitParam(name = "itemNo", value = "商品编号 itemNo",required = true)
     public OrderResult deleteCartItem(@PathVariable String itemNo,HttpServletRequest request, HttpServletResponse response) {
         try{
             return  cartRestService.deleteCartItem(itemNo,request,response);

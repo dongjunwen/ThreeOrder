@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/7/6 14:42:09                            */
+/* Created on:     2018/7/6 16:52:10                            */
 /*==============================================================*/
 
 
@@ -114,8 +114,8 @@ create table tb_order
 (
    id                   int not null auto_increment comment '主键id',
    order_no             varchar(32) comment '订单号',
-   order_time           timestamp comment '订单时间',
-   pay_time             timestamp comment '支付时间',
+   order_time           datetime comment '订单时间',
+   pay_time             datetime comment '支付时间',
    pay_type             int default 0 comment '付款方式 0:货到付款 1:在线支付 2:公司转账',
    order_status         int comment '订单状态',
    order_amt            decimal(16,2) comment '订单金额',
