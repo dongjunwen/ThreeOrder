@@ -22,20 +22,20 @@ public class ItemController {
     private IItemService iItemService;
 
     @RequestMapping("/{itemId}")
-    public OrderResult showItem(@PathVariable Long itemId) {
-        OrderResult itemResult = iItemService.getItemBase(itemId);
+    public OrderResult showItem(@PathVariable String itemNo) {
+        OrderResult itemResult = iItemService.getItemBase(itemNo);
         return itemResult;
     }
 
     @RequestMapping(value = "/desc/{itemId}")
-    public OrderResult getItemDesc(@PathVariable Long itemId) {
-        OrderResult itemResult = iItemService.getItemDesc(itemId);
+    public OrderResult getItemDesc(@PathVariable String itemNo) {
+        OrderResult itemResult = iItemService.getItemDesc(itemNo);
         return itemResult;
     }
 
     @RequestMapping(value = "/param/{itemId}")
-    public OrderResult getItemParam(@PathVariable Long itemId) {
-        OrderResult itemResult = iItemService.getItemParam(itemId);
+    public OrderResult getItemParam(@PathVariable String itemNo) {
+        OrderResult itemResult = iItemService.getItemParam(itemNo);
         return itemResult;
     }
 }
