@@ -1,14 +1,17 @@
 package com.three.order.orderjdbc.entity;
 
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Component
 @Table(name = "tb_item")
+@Data
 public class TbItem {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,114 +34,8 @@ public class TbItem {
   @Column(name = "create_time")
   private java.sql.Timestamp createTime;
   @Column(name = "modi_time")
-  private java.sql.Timestamp modiTime;
+  private Date modiTime;
 
 
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public String getItemNo() {
-    return itemNo;
-  }
-
-  public void setItemNo(String itemNo) {
-    this.itemNo = itemNo;
-  }
-
-
-  public String getItemTitle() {
-    return itemTitle;
-  }
-
-  public void setItemTitle(String itemTitle) {
-    this.itemTitle = itemTitle;
-  }
-
-
-  public String getSellPoint() {
-    return sellPoint;
-  }
-
-  public void setSellPoint(String sellPoint) {
-    this.sellPoint = sellPoint;
-  }
-
-
-  public BigDecimal getPrice() {
-    return price;
-  }
-
-  public void setPrice(BigDecimal price) {
-    this.price = price;
-  }
-
-
-  public BigDecimal getNum() {
-    return num;
-  }
-
-  public void setNum(BigDecimal num) {
-    this.num = num;
-  }
-
-
-  public String getBarcode() {
-    return barcode;
-  }
-
-  public void setBarcode(String barcode) {
-    this.barcode = barcode;
-  }
-
-
-  public String getPicUrl() {
-    return picUrl;
-  }
-
-  public void setPicUrl(String picUrl) {
-    this.picUrl = picUrl;
-  }
-
-
-  public String getCatNo() {
-    return catNo;
-  }
-
-  public void setCatNo(String catNo) {
-    this.catNo = catNo;
-  }
-
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-
-  public java.sql.Timestamp getCreateTime() {
-    return createTime;
-  }
-
-  public void setCreateTime(java.sql.Timestamp createTime) {
-    this.createTime = createTime;
-  }
-
-
-  public java.sql.Timestamp getModiTime() {
-    return modiTime;
-  }
-
-  public void setModiTime(java.sql.Timestamp modiTime) {
-    this.modiTime = modiTime;
-  }
 
 }
