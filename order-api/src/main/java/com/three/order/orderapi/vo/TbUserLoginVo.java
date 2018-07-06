@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -15,11 +16,10 @@ import java.io.Serializable;
 @Data
 @ApiModel(value = "用户登录实体 TbUserLoginVo")
 public class TbUserLoginVo implements Serializable {
-    @NotBlank(message = "登录号不能为空")
+    @NotNull(message = "登录号不能为空")
     @ApiModelProperty(value = "登录号",required =true )
     private String loginNo;
-    @NotBlank(message = "登录密码不能为空")
+    @NotNull(message = "登录密码不能为空")
     @ApiModelProperty(value = "登录密码",required = true)
     private String loginPass;
-
 }

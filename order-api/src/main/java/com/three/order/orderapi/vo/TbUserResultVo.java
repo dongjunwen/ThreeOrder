@@ -13,25 +13,17 @@ import java.io.Serializable;
  * @Description：
  **/
 @Data
-@ApiModel(value = "用户展示实体 TbUserVo")
+@ApiModel(value = "用户展示实体 TbUserResultVo")
 public class TbUserResultVo implements Serializable {
-
-    @NotBlank(message = "登录号不能为空")
-    @ApiModelProperty(value = "登录号",required =true )
+    @ApiModelProperty(value = "用户号",required = false)
     private String userNo;
-    @NotBlank(message = "登录密码不能为空")
-    @ApiModelProperty(value = "登录密码",required = true)
-    private String password;
     @ApiModelProperty(value = "昵称",required = false)
     private String nickName;
     @ApiModelProperty(value = "手机号",required = false)
-    private Integer phoneNum;
+    private String phoneNum;
     @ApiModelProperty(value = "邮箱地址",required = false)
     private String emailAddr;
     @ApiModelProperty(value = "备注",required = false)
     private String memo;
-    private String operNo;
-
-
 
 }

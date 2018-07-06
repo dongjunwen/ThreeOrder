@@ -14,6 +14,7 @@ import com.three.order.orderjdbc.entity.TbUser;
 import com.three.order.orderjdbc.respository.TbUserResp;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -49,16 +50,40 @@ public class UserService implements IUserService {
 
     @Override
     public OrderResult<Integer> updateUser(TbUserVo tbUserVo) {
-        return null;
+        TbUser tbUser=new TbUser();
+        BeanUtils.copyProperties(tbUserVo,tbUser);
+        TbUser oldUser=tbUserResp.findIndex(tbUser.getEmailAddr(),tbUser.getPhoneNum(),tbUser.getNickName());
+        if(oldUser==null){
+            return OrderResult.newError(ResultCode.USER_NOT_EXISTS);
+        }
+        tbUser.setId(oldUser.getId());
+        java.util.Date nowDate=new java.util.Date();
+        tbUser.setModiTime(new java.sql.Timestamp(nowDate.getTime()));
+        tbUserResp.save(tbUser);
+        return OrderResult.newSuccess(1);
     }
 
     @Override
     public OrderResult<TbUserResultVo> getUserById(String userNo) {
-        return null;
+        TbUser tbUser=tbUserResp.findByUserNo(userNo);
+        TbUserResultVo tbUserResultVo=new TbUserResultVo();
+        BeanUtils.copyProperties(tbUserResultVo,tbUser);
+        return OrderResult.newSuccess(tbUserResultVo);
     }
 
     @Override
     public OrderResult<TbUserResultVo> login(TbUserLoginVo tbUserLoginVo) {
-        return null;
+        String loginNo=tbUserLoginVo.getLoginNo();
+        TbUser oldUser=tbUserResp.findByIndex(loginNo);
+        if(oldUser!=null){
+            return OrderResult.newError(ResultCode.USER_HAS_EXISTS);
+        }
+        String loginPass=MD5Util.getMD5(tbUserLoginVo.getLoginPass(), CommonConstants.USER_PASS_KEY);
+        if(!loginPass.equals(oldUser.getLoginPass())){
+            return OrderResult.newError(ResultCode.USERNAME_OR_PASS_ERR);
+        }
+        TbUserResultVo tbUserResultVo=new TbUserResultVo();
+        BeanUtils.copyProperties(tbUserResultVo,oldUser);
+        return OrderResult.newSuccess(tbUserResultVo);
     }
 }

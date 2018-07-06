@@ -23,6 +23,7 @@ public enum ResultCode {
     //用户 1100-1199
     USER_REGIST_CHECK_ERROR("1100","手机号、邮箱、昵称不能全部为空!"),
     USER_HAS_EXISTS("1101","账号已存在!"),
+    USER_NOT_EXISTS("1102","账号不存在!"),
 
 
 

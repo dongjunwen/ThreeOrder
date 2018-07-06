@@ -27,179 +27,179 @@ drop table if exists tb_user;
 /*==============================================================*/
 create table tb_cat_param
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   cat_no               varchar(32) comment 'ÀàÄ¿±àºÅ',
-   cat_param            text comment 'ÀàÄ¿²ÎÊı',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   cat_no               varchar(32) comment 'ç±»ç›®ç¼–å·',
+   cat_param            text comment 'ç±»ç›®å‚æ•°',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_cat_param comment 'ÉÌÆ·ÀàÄ¿²ÎÊı';
+alter table tb_cat_param comment 'å•†å“ç±»ç›®å‚æ•°';
 
 /*==============================================================*/
 /* Table: tb_item                                               */
 /*==============================================================*/
 create table tb_item
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_title           varchar(128) comment 'ÉÌÆ·±êÌâ',
-   sell_point           varchar(500) comment 'ÉÌÆ·Âôµã',
-   price                decimal(16,2) comment 'µ¥¼Û',
-   num                  decimal(16,2) comment 'ÊıÁ¿',
-   bar_code             varchar(128) comment 'ÌõĞÎÂë',
-   pic_url              varchar(128) comment 'Í¼Æ¬',
-   cat_no               varchar(128) comment 'ËùÊôÀàÄ¿',
-   status               int default 1 comment '×´Ì¬ 0:ÎŞĞ§ 1:ÓĞĞ§',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   item_no              varchar(32) comment 'å•†å“ç¼–å·',
+   item_title           varchar(128) comment 'å•†å“æ ‡é¢˜',
+   sell_point           varchar(500) comment 'å•†å“å–ç‚¹',
+   price                decimal(16,2) comment 'å•ä»·',
+   num                  decimal(16,2) comment 'æ•°é‡',
+   bar_code             varchar(128) comment 'æ¡å½¢ç ',
+   pic_url              varchar(128) comment 'å›¾ç‰‡',
+   cat_no               varchar(128) comment 'æ‰€å±ç±»ç›®',
+   status               int default 1 comment 'çŠ¶æ€ 0:æ— æ•ˆ 1:æœ‰æ•ˆ',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_item comment 'ÉÌÆ·ÁĞ±í';
+alter table tb_item comment 'å•†å“åˆ—è¡¨';
 
 /*==============================================================*/
 /* Table: tb_item_cat                                           */
 /*==============================================================*/
 create table tb_item_cat
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   cat_no               varchar(32) comment 'ÀàÄ¿±àºÅ',
-   pcat_no              varchar(32) comment 'ÉÏ¼¶ÀàÄ¿±àºÅ',
-   item_level           int comment 'ÀàÄ¿¼¶±ğ',
-   item_sort            int comment 'ÅÅĞòºÅ',
-   status               int default 1 comment '×´Ì¬ 0:ÎŞĞ§ 1:ÓĞĞ§',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   cat_no               varchar(32) comment 'ç±»ç›®ç¼–å·',
+   pcat_no              varchar(32) comment 'ä¸Šçº§ç±»ç›®ç¼–å·',
+   item_level           int comment 'ç±»ç›®çº§åˆ«',
+   item_sort            int comment 'æ’åºå·',
+   status               int default 1 comment 'çŠ¶æ€ 0:æ— æ•ˆ 1:æœ‰æ•ˆ',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_item_cat comment 'ÉÌÆ·ÀàÄ¿';
+alter table tb_item_cat comment 'å•†å“ç±»ç›®';
 
 /*==============================================================*/
 /* Table: tb_item_desc                                          */
 /*==============================================================*/
 create table tb_item_desc
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_desc            text comment 'ÉÌÆ·ÃèÊö',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   item_no              varchar(32) comment 'å•†å“ç¼–å·',
+   item_desc            text comment 'å•†å“æè¿°',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_item_desc comment 'ÉÌÆ·ÃèÊö';
+alter table tb_item_desc comment 'å•†å“æè¿°';
 
 /*==============================================================*/
 /* Table: tb_item_param                                         */
 /*==============================================================*/
 create table tb_item_param
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_param           text comment 'ÉÌÆ·²ÎÊı',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   item_no              varchar(32) comment 'å•†å“ç¼–å·',
+   item_param           text comment 'å•†å“å‚æ•°',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_item_param comment 'ÉÌÆ·²ÎÊı';
+alter table tb_item_param comment 'å•†å“å‚æ•°';
 
 /*==============================================================*/
 /* Table: tb_order                                              */
 /*==============================================================*/
 create table tb_order
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   order_no             varchar(32) comment '¶©µ¥ºÅ',
-   order_time           timestamp comment '¶©µ¥Ê±¼ä',
-   pay_time             timestamp comment 'Ö§¸¶Ê±¼ä',
-   pay_type             int default 0 comment '¸¶¿î·½Ê½ 0:»õµ½¸¶¿î 1:ÔÚÏßÖ§¸¶ 2:¹«Ë¾×ªÕË',
-   order_status         int comment '¶©µ¥×´Ì¬',
-   order_amt            decimal(16,2) comment '¶©µ¥½ğ¶î',
-   coup_amt             decimal(16,2) comment 'ÓÅ»İ½ğ¶î',
-   trans_amt            decimal(16,2) comment 'ÔË·Ñ',
-   act_order_amt        decimal(16,2) comment 'Êµ¼Ê¶©µ¥½ğ¶î=¶©µ¥½ğ¶î+ÔË·Ñ-ÓÅ»İ½ğ¶î',
-   order_rate           decimal(16,6) comment 'Ë°ÂÊ',
-   act_tax_amt          decimal(16,2) comment 'Êµ¼Êº¬Ë°½ğ¶î=Êµ¼Ê¶©µ¥½ğ¶î*Ë°ÂÊ',
-   pay_amt              decimal(16,2) comment 'ÒÑ¸¶½ğ¶î',
-   buyler_id            varchar(32) comment 'ÓÃ»§±àºÅ',
-   shop_no              varchar(32) comment 'µêÆÌ±àºÅ',
-   seller_id            varchar(32) comment 'Âô¼Ò±àºÅ',
-   order_desc           varchar(256) comment '¶©µ¥ÃèÊö',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   order_no             varchar(32) comment 'è®¢å•å·',
+   order_time           timestamp comment 'è®¢å•æ—¶é—´',
+   pay_time             timestamp comment 'æ”¯ä»˜æ—¶é—´',
+   pay_type             int default 0 comment 'ä»˜æ¬¾æ–¹å¼ 0:è´§åˆ°ä»˜æ¬¾ 1:åœ¨çº¿æ”¯ä»˜ 2:å…¬å¸è½¬è´¦',
+   order_status         int comment 'è®¢å•çŠ¶æ€',
+   order_amt            decimal(16,2) comment 'è®¢å•é‡‘é¢',
+   coup_amt             decimal(16,2) comment 'ä¼˜æƒ é‡‘é¢',
+   trans_amt            decimal(16,2) comment 'è¿è´¹',
+   act_order_amt        decimal(16,2) comment 'å®é™…è®¢å•é‡‘é¢=è®¢å•é‡‘é¢+è¿è´¹-ä¼˜æƒ é‡‘é¢',
+   order_rate           decimal(16,6) comment 'ç¨ç‡',
+   act_tax_amt          decimal(16,2) comment 'å®é™…å«ç¨é‡‘é¢=å®é™…è®¢å•é‡‘é¢*ç¨ç‡',
+   pay_amt              decimal(16,2) comment 'å·²ä»˜é‡‘é¢',
+   buyler_id            varchar(32) comment 'ç”¨æˆ·ç¼–å·',
+   shop_no              varchar(32) comment 'åº—é“ºç¼–å·',
+   seller_id            varchar(32) comment 'å–å®¶ç¼–å·',
+   order_desc           varchar(256) comment 'è®¢å•æè¿°',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_order comment '¶©µ¥±í';
+alter table tb_order comment 'è®¢å•è¡¨';
 
 /*==============================================================*/
 /* Table: tb_order_item                                         */
 /*==============================================================*/
 create table tb_order_item
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   order_no             varchar(32) comment '¶©µ¥ºÅ',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_name            varchar(128) comment 'ÉÌÆ·Ãû³Æ',
-   item_pic_url         varchar(256) comment 'ÉÌÆ·Í¼Æ¬µØÖ·',
-   price                decimal(16,2) comment 'µ¥¼Û',
-   num                  decimal(16,2) comment 'ÊıÁ¿',
-   amt                  decimal(16,2) comment '½ğ¶î',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   order_no             varchar(32) comment 'è®¢å•å·',
+   item_no              varchar(32) comment 'å•†å“ç¼–å·',
+   item_name            varchar(128) comment 'å•†å“åç§°',
+   item_pic_url         varchar(256) comment 'å•†å“å›¾ç‰‡åœ°å€',
+   price                decimal(16,2) comment 'å•ä»·',
+   num                  decimal(16,2) comment 'æ•°é‡',
+   amt                  decimal(16,2) comment 'é‡‘é¢',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_order_item comment '¶©µ¥ÏêÇé±í';
+alter table tb_order_item comment 'è®¢å•è¯¦æƒ…è¡¨';
 
 /*==============================================================*/
 /* Table: tb_order_shipping                                     */
 /*==============================================================*/
 create table tb_order_shipping
 (
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   order_no             varchar(32) comment '¶©µ¥ºÅ',
-   recv_name            varchar(64) comment 'ÊÕ»õÈËĞÕÃû',
-   recv_phone           varchar(32) comment '¹Ì¶¨µç»°',
-   recv_mobile          varchar(32) comment 'ÒÆ¶¯µç»°',
-   recv_province        varchar(12) comment 'Ê¡·İ',
-   recv_city            varchar(16) comment '³ÇÊĞ',
-   recv_district        varchar(32) comment 'Çø¡¢ÏØ',
-   recv_address         varchar(256) comment 'ÊÕ»õÈËµØÖ·',
-   recv_zip             varchar(6) comment 'ÓÊÕş±àÂë',
-   status               char(1) comment 'ÊÇ·ñÉúĞ§ Y:ÓĞĞ§N:ÎŞĞ§',
-   create_time          timestamp comment '´´½¨Ê±¼ä',
-   modi_time            timestamp comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®id',
+   order_no             varchar(32) comment 'è®¢å•å·',
+   recv_name            varchar(64) comment 'æ”¶è´§äººå§“å',
+   recv_phone           varchar(32) comment 'å›ºå®šç”µè¯',
+   recv_mobile          varchar(32) comment 'ç§»åŠ¨ç”µè¯',
+   recv_province        varchar(12) comment 'çœä»½',
+   recv_city            varchar(16) comment 'åŸå¸‚',
+   recv_district        varchar(32) comment 'åŒºã€å¿',
+   recv_address         varchar(256) comment 'æ”¶è´§äººåœ°å€',
+   recv_zip             varchar(6) comment 'é‚®æ”¿ç¼–ç ',
+   status               char(1) comment 'æ˜¯å¦ç”Ÿæ•ˆ Y:æœ‰æ•ˆN:æ— æ•ˆ',
+   create_time          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   modi_time            timestamp comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_order_shipping comment '¶©µ¥ÎïÁ÷ĞÅÏ¢±í';
+alter table tb_order_shipping comment 'è®¢å•ç‰©æµä¿¡æ¯è¡¨';
 
 /*==============================================================*/
 /* Table: tb_user                                               */
 /*==============================================================*/
 create table tb_user
 (
-   id                   int not null auto_increment comment '×ÔÔöÖ÷¼üID',
-   user_no              VARCHAR(32) comment 'ÓÃ»§±àºÅ',
-   user_name            VARCHAR(64) comment 'ÓÃ»§Ãû³Æ',
-   nick_name            VARCHAR(64) comment 'êÇ³Æ',
-   phone_num            VARCHAR(64) comment 'ÊÖ»úºÅ',
-   email_addr           VARCHAR(64) comment 'ÓÊÏä',
-   login_pass           VARCHAR(256) comment 'µÇÂ¼ÃÜÂë',
-   last_login_time      TIMESTAMP comment '×îºóÒ»´ÎµÇÂ¼Ê±¼ä',
-   status               CHAR(1) default 'Y' comment '×´Ì¬ Y:ÓĞĞ§ N:ÎŞĞ§',
-   memo                 VARCHAR(256) comment '±¸×¢',
-   create_no            VARCHAR(32) comment '´´½¨ÈË',
-   create_time          TIMESTAMP comment '´´½¨Ê±¼ä',
-   modi_no              VARCHAR(32) comment 'ĞŞ¸ÄÈË',
-   modi_time            TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
+   id                   int not null auto_increment comment 'è‡ªå¢ä¸»é”®ID',
+   user_no              VARCHAR(32) comment 'ç”¨æˆ·ç¼–å·',
+   user_name            VARCHAR(64) comment 'ç”¨æˆ·åç§°',
+   nick_name            VARCHAR(64) comment 'æ˜µç§°',
+   phone_num            VARCHAR(64) comment 'æ‰‹æœºå·',
+   email_addr           VARCHAR(64) comment 'é‚®ç®±',
+   login_pass           VARCHAR(256) comment 'ç™»å½•å¯†ç ',
+   last_login_time      TIMESTAMP comment 'æœ€åä¸€æ¬¡ç™»å½•æ—¶é—´',
+   status               CHAR(1) default 'Y' comment 'çŠ¶æ€ Y:æœ‰æ•ˆ N:æ— æ•ˆ',
+   memo                 VARCHAR(256) comment 'å¤‡æ³¨',
+   create_no            VARCHAR(32) comment 'åˆ›å»ºäºº',
+   create_time          TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
+   modi_no              VARCHAR(32) comment 'ä¿®æ”¹äºº',
+   modi_time            TIMESTAMP comment 'ä¿®æ”¹æ—¶é—´',
    primary key (id)
 );
 
-alter table tb_user comment 'ÓÃ»§±í';
+alter table tb_user comment 'ç”¨æˆ·è¡¨';
 

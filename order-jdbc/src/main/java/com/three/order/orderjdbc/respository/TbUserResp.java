@@ -17,4 +17,9 @@ public interface TbUserResp extends JpaRepository<TbUser,Long> {
 
     @Query(value = "select *  from tb_user u where 1=1 and (u.email_addr=:emailAddr or u.phone_num=:phoneNum or u.nick_name=:nickName)",nativeQuery = true)
     TbUser findIndex(@Param("emailAddr") String emailAddr,@Param("phoneNum")String phoneNum,@Param("nickName")String nickName);
+
+    TbUser findByUserNo(String userNo);
+
+    @Query(value = "select *  from tb_user u where 1=1 and (u.email_addr=:loginNo or u.phone_num=:loginNo or u.nick_name=:loginNo)",nativeQuery = true)
+    TbUser findByIndex(@Param("emailAddr")String loginNo);
 }
