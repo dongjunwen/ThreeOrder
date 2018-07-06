@@ -4,6 +4,8 @@ import com.three.order.orderapi.api.ICartService;
 import com.three.order.orderapi.result.OrderResult;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * @Author:luiz
  * @Date: 2018/7/3 19:20
@@ -12,8 +14,9 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class CartService implements ICartService {
+
     @Override
-    public OrderResult addCartItem(String itemId, Integer num) {
+    public OrderResult addCartItem(String itemId, BigDecimal num) {
         return null;
     }
 
@@ -23,7 +26,7 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public OrderResult updateCartItem(String itemId, Integer num) {
+    public OrderResult updateCartItem(String itemId, BigDecimal num) {
         return null;
     }
 

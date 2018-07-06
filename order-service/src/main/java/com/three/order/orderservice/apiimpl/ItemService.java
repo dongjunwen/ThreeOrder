@@ -13,17 +13,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemService implements IItemService {
     @Override
-    public OrderResult getItemBase(Long itemId) {
+    public OrderResult getItemBase(String itemNo) {
         return null;
     }
 
     @Override
-    public OrderResult getItemDesc(Long itemId) {
+    public OrderResult getItemDesc(String itemNo) {
         return null;
     }
 
     @Override
-    public OrderResult getItemParam(Long itemId) {
+    public OrderResult getItemParam(String itemNo) {
         return null;
     }
 }
