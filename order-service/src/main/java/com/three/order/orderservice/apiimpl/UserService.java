@@ -66,8 +66,11 @@ public class UserService implements IUserService {
     @Override
     public OrderResult<TbUserResultVo> getUserById(String userNo) {
         TbUser tbUser=tbUserResp.findByUserNo(userNo);
+        if(tbUser==null){
+            return OrderResult.newError(ResultCode.USER_NOT_EXISTS);
+        }
         TbUserResultVo tbUserResultVo=new TbUserResultVo();
-        BeanUtils.copyProperties(tbUserResultVo,tbUser);
+        BeanUtils.copyProperties(tbUser,tbUserResultVo);
         return OrderResult.newSuccess(tbUserResultVo);
     }
 
@@ -75,8 +78,8 @@ public class UserService implements IUserService {
     public OrderResult<TbUserResultVo> login(TbUserLoginVo tbUserLoginVo) {
         String loginNo=tbUserLoginVo.getLoginNo();
         TbUser oldUser=tbUserResp.findByIndex(loginNo);
-        if(oldUser!=null){
-            return OrderResult.newError(ResultCode.USER_HAS_EXISTS);
+        if(oldUser==null){
+            return OrderResult.newError(ResultCode.USER_NOT_EXISTS);
         }
         String loginPass=MD5Util.getMD5(tbUserLoginVo.getLoginPass(), CommonConstants.USER_PASS_KEY);
         if(!loginPass.equals(oldUser.getLoginPass())){

@@ -21,5 +21,5 @@ public interface TbUserResp extends JpaRepository<TbUser,Long> {
     TbUser findByUserNo(String userNo);
 
     @Query(value = "select *  from tb_user u where 1=1 and (u.email_addr=:loginNo or u.phone_num=:loginNo or u.nick_name=:loginNo)",nativeQuery = true)
-    TbUser findByIndex(@Param("emailAddr")String loginNo);
+    TbUser findByIndex(@Param("loginNo")String loginNo);
 }

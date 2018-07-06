@@ -72,7 +72,14 @@ public class UserController {
             return OrderResult.newError(ResultCode.FAIL);
         }
     }
+    @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
+    @ApiOperation(value="根据request当前登录信息", notes="根据request当前登录信息")
+    public OrderResult<TbUserResultVo> getCurrentUser(HttpServletRequest request){
+        HttpSession session= request.getSession(false);
+        TbUserResultVo tbUserResultVo= (TbUserResultVo)session.getAttribute(session.getId());
+        return OrderResult.newSuccess(tbUserResultVo);
 
+    }
 
     @RequestMapping(value = "/{userNo}",method = RequestMethod.GET)
     @ApiOperation(value="获取用户详细信息", notes="根据url的用户编号来获取用户详细信息")
@@ -90,6 +97,9 @@ public class UserController {
         try {
             String tokenStr= IDUtils.genIdStr("T");
             OrderResult<TbUserResultVo> orderResult=iUserService.login(tbUserLoginVo);
+            if(!orderResult.isSuccess()){
+                return OrderResult.newError(orderResult.getRetCode(),orderResult.getRetMsg());
+            }
             TbUserResultVo tbUserResultVo=orderResult.getData();
             HttpSession session= request.getSession(true);
             session.setAttribute("TOKEN",tokenStr);
@@ -106,7 +116,7 @@ public class UserController {
     @GetMapping(value="logout")
     public OrderResult<String> logout(HttpServletRequest request){
         HttpSession session= request.getSession(false);
-         String tokenStr=(String) session.getAttribute("TOKEN");
+        String tokenStr=(String) session.getAttribute("TOKEN");
         session.removeAttribute("TOKEN");
         session.removeAttribute(tokenStr);
         session.removeAttribute(session.getId());
