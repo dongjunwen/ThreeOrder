@@ -24,14 +24,8 @@ public class TbUser {
   private String emailAddr;
   @Column(name = "login_pass")
   private String loginPass;
-  @Column(name = "last_login_time")
-  private java.sql.Timestamp lastLoginTime;
   private String status;
   private String memo;
-  @Column(name = "create_no")
-  private String createNo;
-  @Column(name = "modi_no")
-  private String modiNo;
   @Column(name = "create_time")
   private java.sql.Timestamp createTime;
   @Column(name = "modi_time")
@@ -101,15 +95,6 @@ public class TbUser {
   }
 
 
-  public java.sql.Timestamp getLastLoginTime() {
-    return lastLoginTime;
-  }
-
-  public void setLastLoginTime(java.sql.Timestamp lastLoginTime) {
-    this.lastLoginTime = lastLoginTime;
-  }
-
-
   public String getStatus() {
     return status;
   }
@@ -127,16 +112,6 @@ public class TbUser {
     this.memo = memo;
   }
 
-
-  public String getCreateNo() {
-    return createNo;
-  }
-
-  public void setCreateNo(String createNo) {
-    this.createNo = createNo;
-  }
-
-
   public java.sql.Timestamp getCreateTime() {
     return createTime;
   }
@@ -144,16 +119,6 @@ public class TbUser {
   public void setCreateTime(java.sql.Timestamp createTime) {
     this.createTime = createTime;
   }
-
-
-  public String getModiNo() {
-    return modiNo;
-  }
-
-  public void setModiNo(String modiNo) {
-    this.modiNo = modiNo;
-  }
-
 
   public java.sql.Timestamp getModiTime() {
     return modiTime;

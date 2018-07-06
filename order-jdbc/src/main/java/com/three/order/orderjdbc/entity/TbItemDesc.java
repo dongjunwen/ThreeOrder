@@ -12,7 +12,9 @@ public class TbItemDesc {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+  @Column(name = "item_no")
   private String itemNo;
+  @Column(name = "item_desc")
   private String itemDesc;
   @Column(name = "create_time")
   private java.sql.Timestamp createTime;

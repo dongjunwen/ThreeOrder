@@ -26,7 +26,7 @@ public class TbItem {
   private String picUrl;
   @Column(name = "cat_no")
   private String catNo;
-  private long status;
+  private String status;
   @Column(name = "create_time")
   private java.sql.Timestamp createTime;
   @Column(name = "modi_time")
@@ -114,11 +114,11 @@ public class TbItem {
   }
 
 
-  public long getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(long status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

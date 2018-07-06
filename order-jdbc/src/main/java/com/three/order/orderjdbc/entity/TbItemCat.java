@@ -20,7 +20,7 @@ public class TbItemCat {
   private long itemLevel;
   @Column(name = "item_sort")
   private long itemSort;
-  private long status;
+  private String status;
   @Column(name = "create_time")
   private java.sql.Timestamp createTime;
   @Column(name = "modi_time")
@@ -72,11 +72,11 @@ public class TbItemCat {
   }
 
 
-  public long getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(long status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

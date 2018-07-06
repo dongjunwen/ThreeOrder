@@ -75,8 +75,8 @@ public class UserController {
     @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
     @ApiOperation(value="根据request当前登录信息", notes="根据request当前登录信息")
     public OrderResult<TbUserResultVo> getCurrentUser(HttpServletRequest request){
-        HttpSession session= request.getSession(false);
-        TbUserResultVo tbUserResultVo= (TbUserResultVo)session.getAttribute(session.getId());
+        HttpSession session= request.getSession();
+        TbUserResultVo tbUserResultVo= (TbUserResultVo)session.getAttribute("USER_INFO");
         return OrderResult.newSuccess(tbUserResultVo);
 
     }
@@ -101,10 +101,10 @@ public class UserController {
                 return OrderResult.newError(orderResult.getRetCode(),orderResult.getRetMsg());
             }
             TbUserResultVo tbUserResultVo=orderResult.getData();
-            HttpSession session= request.getSession(true);
+            HttpSession session= request.getSession();
             session.setAttribute("TOKEN",tokenStr);
             session.setAttribute(tokenStr,tbUserResultVo);
-            session.setAttribute(session.getId(),tbUserResultVo);
+            session.setAttribute("USER_INFO",tbUserResultVo);
             logger.info("账号:{}登录成功",tbUserLoginVo);
             return OrderResult.newSuccess(tbUserLoginVo.getLoginNo()+"登录成功!");
         }catch(Exception e){
@@ -115,11 +115,11 @@ public class UserController {
     @ApiOperation(value = "退出登录")
     @GetMapping(value="logout")
     public OrderResult<String> logout(HttpServletRequest request){
-        HttpSession session= request.getSession(false);
+        HttpSession session= request.getSession();
         String tokenStr=(String) session.getAttribute("TOKEN");
         session.removeAttribute("TOKEN");
         session.removeAttribute(tokenStr);
-        session.removeAttribute(session.getId());
+        session.removeAttribute("USER_INFO");
         return OrderResult.newSuccess("已退出!");
     }
 
