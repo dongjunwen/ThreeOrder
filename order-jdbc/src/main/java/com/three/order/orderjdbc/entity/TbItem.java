@@ -1,6 +1,7 @@
 package com.three.order.orderjdbc.entity;
 
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Component
 @Table(name = "tb_item")
+@Data
 public class TbItem {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
