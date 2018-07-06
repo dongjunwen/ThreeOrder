@@ -5,7 +5,10 @@ import com.three.order.orderapi.result.OrderResult;
 import com.three.order.orderapi.vo.TbUserLoginVo;
 import com.three.order.orderapi.vo.TbUserResultVo;
 import com.three.order.orderapi.vo.TbUserVo;
+import com.three.order.ordercommon.constant.CommonConstants;
 import com.three.order.ordercommon.utils.IDUtils;
+import com.three.order.orderrest.utils.RequestUtils;
+import com.three.order.orderrest.utils.TokenUtils;
 import com.three.order.orderrest.validator.ValidatorUtil;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +33,8 @@ public class UserController {
 
     @Autowired
     IUserService iUserService;
+    @Autowired
+    TokenUtils tokenUtils;
 
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ApiOperation(value="用户注册", notes="根据tbUserVo对象注册用户信息")
@@ -75,8 +80,22 @@ public class UserController {
     @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
     @ApiOperation(value="根据request当前登录信息", notes="根据request当前登录信息")
     public OrderResult<TbUserResultVo> getCurrentUser(HttpServletRequest request){
-        HttpSession session= request.getSession();
-        TbUserResultVo tbUserResultVo= (TbUserResultVo)session.getAttribute("USER_INFO");
+        TbUserResultVo tbUserResultVo=RequestUtils.getCurrentUser(request);
+        if(tbUserResultVo==null){
+            return OrderResult.newError(ResultCode.USER_NO_LOGGED_IN);
+        }
+        return OrderResult.newSuccess(tbUserResultVo);
+
+    }
+
+    @RequestMapping(value = "/getCurrentUserByToken/{tokenStr}",method = RequestMethod.GET)
+    @ApiOperation(value="根据Token当前登录信息", notes="根据Token当前登录信息")
+    @ApiImplicitParam(name = "tokenStr", value = "token值", required = true, dataType = "string",paramType = "path")
+    public OrderResult<TbUserResultVo> getCurrentUserByToken(@PathVariable("tokenStr") String tokenStr){
+        TbUserResultVo tbUserResultVo=tokenUtils.getUserByToken(tokenStr);
+        if(tbUserResultVo==null){
+            return OrderResult.newError(ResultCode.USER_NO_LOGGED_IN);
+        }
         return OrderResult.newSuccess(tbUserResultVo);
 
     }
@@ -102,11 +121,10 @@ public class UserController {
             }
             TbUserResultVo tbUserResultVo=orderResult.getData();
             HttpSession session= request.getSession();
-            session.setAttribute("TOKEN",tokenStr);
-            session.setAttribute(tokenStr,tbUserResultVo);
-            session.setAttribute("USER_INFO",tbUserResultVo);
-            logger.info("账号:{}登录成功",tbUserLoginVo);
-            return OrderResult.newSuccess(tbUserLoginVo.getLoginNo()+"登录成功!");
+            tokenUtils.putUser(tokenStr,tbUserResultVo);
+            session.setAttribute(CommonConstants.USER_SESSION_ATTR,tbUserResultVo);
+            logger.info("账号:{}登录成功",tbUserLoginVo.getLoginNo());
+            return OrderResult.newSuccess(tokenStr);
         }catch(Exception e){
             return OrderResult.newError(ResultCode.USERNAME_OR_PASS_ERR);
         }
@@ -115,11 +133,8 @@ public class UserController {
     @ApiOperation(value = "退出登录")
     @GetMapping(value="logout")
     public OrderResult<String> logout(HttpServletRequest request){
-        HttpSession session= request.getSession();
-        String tokenStr=(String) session.getAttribute("TOKEN");
-        session.removeAttribute("TOKEN");
-        session.removeAttribute(tokenStr);
-        session.removeAttribute("USER_INFO");
+        HttpSession session= request.getSession(false);
+        session.removeAttribute(CommonConstants.USER_SESSION_ATTR);
         return OrderResult.newSuccess("已退出!");
     }
 

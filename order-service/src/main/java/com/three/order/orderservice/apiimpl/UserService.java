@@ -86,7 +86,7 @@ public class UserService implements IUserService {
             return OrderResult.newError(ResultCode.USERNAME_OR_PASS_ERR);
         }
         TbUserResultVo tbUserResultVo=new TbUserResultVo();
-        BeanUtils.copyProperties(tbUserResultVo,oldUser);
+        BeanUtils.copyProperties(oldUser,tbUserResultVo);
         return OrderResult.newSuccess(tbUserResultVo);
     }
 }
