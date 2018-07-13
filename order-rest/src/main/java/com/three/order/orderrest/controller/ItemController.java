@@ -4,8 +4,7 @@ import com.three.order.orderapi.api.IItemService;
 import com.three.order.orderapi.enums.ResultCode;
 import com.three.order.orderapi.result.OrderResult;
 import io.swagger.annotations.Api;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,19 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/item")
 @Api(tags = "商品",description = "商品相关api")
+@Slf4j
 public class ItemController {
 
     @Autowired
     private IItemService iItemService;
 
-    private static Logger logger= LoggerFactory.getLogger(ItemController.class);
+    //private static Logger logger= LoggerFactory.getLogger(ItemController.class);
     @RequestMapping("/{itemNo}")
     public OrderResult showItem(@PathVariable String itemNo) {
         try {
-            logger.info("商品信息:{},查询成功",itemNo);
+            log.info("商品信息:{},查询成功",itemNo);
             return iItemService.getItemBase(itemNo);
         }catch (Exception e){
-            logger.info("商品信息:{},查询异常",itemNo);
+            log.info("商品信息:{},查询异常",itemNo);
             return OrderResult.newError(ResultCode.FAIL);
         }
 
@@ -41,10 +41,10 @@ public class ItemController {
     public OrderResult getItemDesc(@PathVariable String itemNo) {
         try {
             OrderResult itemResult = iItemService.getItemDesc(itemNo);
-            logger.info("商品描述:{},查询成功",itemNo);
+            log.info("商品描述:{},查询成功",itemNo);
             return itemResult;
         }catch (Exception e){
-            logger.info("商品描述:{},查询异常",itemNo);
+            log.info("商品描述:{},查询异常",itemNo);
             return OrderResult.newError(ResultCode.FAIL);
         }
 
@@ -54,10 +54,10 @@ public class ItemController {
     public OrderResult getItemParam(@PathVariable String itemNo) {
         try{
             OrderResult itemResult = iItemService.getItemParam(itemNo);
-            logger.info("商品参数:{},查询成功",itemNo);
+            log.info("商品参数:{},查询成功",itemNo);
             return itemResult;
         }catch (Exception e){
-            logger.info("商品参数:{},查询异常",itemNo);
+            log.info("商品参数:{},查询异常",itemNo);
             return OrderResult.newError(ResultCode.FAIL);
         }
 

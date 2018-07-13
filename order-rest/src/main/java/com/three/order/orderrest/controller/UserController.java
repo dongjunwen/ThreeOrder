@@ -11,6 +11,7 @@ import com.three.order.orderrest.utils.RequestUtils;
 import com.three.order.orderrest.utils.TokenUtils;
 import com.three.order.orderrest.validator.ValidatorUtil;
 import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,8 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "用户",description = "用户相关api")
+@Slf4j
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     IUserService iUserService;
@@ -54,7 +55,7 @@ public class UserController {
             }
             return  _result;
         }catch (Exception e){
-            logger.error("注册账号异常!{}",e);
+            log.error("注册账号异常!{}",e);
             return OrderResult.newError(ResultCode.FAIL);
         }
     }
@@ -71,7 +72,7 @@ public class UserController {
             }
             return OrderResult.newSuccess("修改账号成功");
         } catch (Exception e) {
-            logger.error("用户修改异常!{}", e);
+            log.error("用户修改异常!{}", e);
             return OrderResult.newError(ResultCode.FAIL);
         }
     }
@@ -119,7 +120,7 @@ public class UserController {
             HttpSession session= request.getSession();
             tokenUtils.putUser(tokenStr,tbUserResultVo);
             session.setAttribute(CommonConstants.USER_SESSION_ATTR,tbUserResultVo);
-            logger.info("账号:{}登录成功",tbUserLoginVo.getLoginNo());
+            log.info("账号:{}登录成功",tbUserLoginVo.getLoginNo());
             return OrderResult.newSuccess(tokenStr);
         }catch(Exception e){
             return OrderResult.newError(ResultCode.USERNAME_OR_PASS_ERR);

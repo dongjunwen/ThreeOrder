@@ -58,13 +58,12 @@ public class ItemService implements IItemService {
 
     @Override
     public OrderResult getItemParam(String itemNo) {
-
-        TbItemParam tbItemDesc=tbItemParamResp.findItemParamByItemNo(itemNo);
-        if (tbItemDesc==null){
+        TbItemParam tbItemParam=tbItemParamResp.findItemParamByItemNo(itemNo);
+        if (tbItemParam==null){
             return OrderResult.newError(ResultCode.COMMON_DATA_NOT_EXISTS);
         }
         TbItemParamVo tbItemVo=new TbItemParamVo();
-        BeanUtils.copyProperties(tbItemDesc,tbItemVo);
+        BeanUtils.copyProperties(tbItemParam,tbItemVo);
         return  OrderResult.newSuccess(tbItemVo);
     }
 }

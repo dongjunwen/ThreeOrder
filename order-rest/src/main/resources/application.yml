@@ -57,3 +57,5 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+logging:
+  config: classpath:logback-spring.xml
