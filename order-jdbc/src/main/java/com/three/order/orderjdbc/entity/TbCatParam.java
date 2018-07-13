@@ -1,12 +1,12 @@
 package com.three.order.orderjdbc.entity;
 
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Component
 @Table(name = "tb_cat_param")
+@Data
 public class TbCatParam extends BaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,13 +2,10 @@ package com.three.order.orderjdbc.entity;
 
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Component
 @Table(name = "tb_item_desc")
 @Data
 public class TbItemDesc extends BaseEntity{

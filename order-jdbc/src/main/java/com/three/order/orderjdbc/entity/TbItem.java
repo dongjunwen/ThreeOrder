@@ -2,14 +2,11 @@ package com.three.order.orderjdbc.entity;
 
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
-@Component
 @Table(name = "tb_item")
 @Data
 public class TbItem extends BaseEntity{
@@ -31,7 +28,4 @@ public class TbItem extends BaseEntity{
   @Column(name = "cat_no")
   private String catNo;
   private String status;
-
-
-
 }

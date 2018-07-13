@@ -2,14 +2,12 @@ package com.three.order.orderjdbc.entity;
 
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
-@Component
 @Table(name = "tb_order")
 @Data
 public class TbOrder extends BaseEntity{
