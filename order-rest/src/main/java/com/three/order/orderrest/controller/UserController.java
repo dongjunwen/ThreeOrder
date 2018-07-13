@@ -40,7 +40,6 @@ public class UserController {
     @ApiOperation(value="用户注册", notes="根据tbUserVo对象注册用户信息")
     @ApiParam(name = "tbUserVo", value = "用户操作实体 tbUserVo",required = true)
     public OrderResult<Integer> createUser(@RequestBody TbUserVo tbUserVo){
-        ValidatorUtil.validateEntity(tbUserVo);//校验用户实体字段，
         try{
             if(StringUtils.isEmpty(tbUserVo.getEmailAddr())
                     &&StringUtils.isEmpty(tbUserVo.getPhoneNum())
@@ -61,11 +60,10 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "updateUser",method = RequestMethod.PUT)
+    @RequestMapping(value = "updateUser",method = RequestMethod.POST)
     @ApiOperation(value="修改用户", notes="根据tbUserVo对象修改用户")
     @ApiParam(name = "tbUserVo", value = "用户操作实体 tbUserVo",required = true)
     public OrderResult<String> updateUser(@RequestBody TbUserVo tbUserVo) {
-        ValidatorUtil.validateEntity(tbUserVo);//校验用户实体字段，
         try {
             OrderResult<Integer> _result = iUserService.updateUser(tbUserVo);
             if (!_result.isSuccess()) {
@@ -111,8 +109,6 @@ public class UserController {
     @PostMapping(value = "login")
     @ApiParam(name = "tbUserLoginVo", value = "用户操作实体 tbUserLoginVo",required = true)
     public OrderResult<String> login(@RequestBody TbUserLoginVo tbUserLoginVo, HttpServletRequest request){
-        //模拟登录
-        ValidatorUtil.validateEntity(tbUserLoginVo);//校验用户实体字段，
         try {
             String tokenStr= IDUtils.genIdStr("T");
             OrderResult<TbUserResultVo> orderResult=iUserService.login(tbUserLoginVo);
