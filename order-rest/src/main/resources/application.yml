@@ -11,7 +11,7 @@ spring:
     database: 0
     host: 127.0.0.1
     port: 6379
-    password:
+    password: sun1001
     flush-mode: IMMEDIATE
     namespace: spring:session
     timeout: 3000s
@@ -26,9 +26,9 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/threeorder_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: admin
+    username: root
     #password: root
-    password: admin_!@#123QWE
+    password: sun1001
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
     initialSize: 1
