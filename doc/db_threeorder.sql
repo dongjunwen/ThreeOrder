@@ -1,202 +1,182 @@
-/*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/7/6 16:52:10                            */
-/*==============================================================*/
+/*
+SQLyog Ultimate v12.09 (64 bit)
+MySQL - 5.7.20-log : Database - threeorder_db
+*********************************************************************
+*/
 
+/*!40101 SET NAMES utf8 */;
 
-drop table if exists tb_cat_param;
+/*!40101 SET SQL_MODE=''*/;
 
-drop table if exists tb_item;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`threeorder_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-drop table if exists tb_item_cat;
+USE `threeorder_db`;
 
-drop table if exists tb_item_desc;
+/*Table structure for table `tb_cat_param` */
 
-drop table if exists tb_item_param;
+DROP TABLE IF EXISTS `tb_cat_param`;
 
-drop table if exists tb_order;
+CREATE TABLE `tb_cat_param` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `cat_no` varchar(32) DEFAULT NULL COMMENT 'ç±»ç›®ç¼–å·',
+  `cat_param` text COMMENT 'ç±»ç›®å‚æ•°',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='å•†å“ç±»ç›®å‚æ•°';
 
-drop table if exists tb_order_item;
+/*Table structure for table `tb_item` */
 
-drop table if exists tb_order_shipping;
+DROP TABLE IF EXISTS `tb_item`;
 
-drop table if exists tb_user;
+CREATE TABLE `tb_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `item_no` varchar(32) DEFAULT NULL COMMENT 'å•†å“ç¼–å·',
+  `item_title` varchar(128) DEFAULT NULL COMMENT 'å•†å“æ ‡é¢˜',
+  `sell_point` varchar(500) DEFAULT NULL COMMENT 'å•†å“å–ç‚¹',
+  `price` decimal(16,2) DEFAULT NULL COMMENT 'å•ä»·',
+  `num` decimal(16,2) DEFAULT NULL COMMENT 'æ•°é‡',
+  `bar_code` varchar(128) DEFAULT NULL COMMENT 'æ¡å½¢ç ',
+  `pic_url` varchar(128) DEFAULT NULL COMMENT 'å›¾ç‰‡',
+  `cat_no` varchar(128) DEFAULT NULL COMMENT 'æ‰€å±ç±»ç›®',
+  `status` char(1) DEFAULT 'Y' COMMENT 'çŠ¶æ€ Y:æœ‰æ•ˆ N:æ— æ•ˆ',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4096 DEFAULT CHARSET=utf8 COMMENT='å•†å“åˆ—è¡¨';
 
-/*==============================================================*/
-/* Table: tb_cat_param                                          */
-/*==============================================================*/
-create table tb_cat_param
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   cat_no               varchar(32) comment 'ÀàÄ¿±àºÅ',
-   cat_param            text comment 'ÀàÄ¿²ÎÊı',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+/*Table structure for table `tb_item_cat` */
 
-alter table tb_cat_param comment 'ÉÌÆ·ÀàÄ¿²ÎÊı';
+DROP TABLE IF EXISTS `tb_item_cat`;
 
-/*==============================================================*/
-/* Table: tb_item                                               */
-/*==============================================================*/
-create table tb_item
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_title           varchar(128) comment 'ÉÌÆ·±êÌâ',
-   sell_point           varchar(500) comment 'ÉÌÆ·Âôµã',
-   price                decimal(16,2) comment 'µ¥¼Û',
-   num                  decimal(16,2) comment 'ÊıÁ¿',
-   bar_code             varchar(128) comment 'ÌõĞÎÂë',
-   pic_url              varchar(128) comment 'Í¼Æ¬',
-   cat_no               varchar(128) comment 'ËùÊôÀàÄ¿',
-   status               char(1) default 'Y' comment '×´Ì¬ Y:ÓĞĞ§ N:ÎŞĞ§',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+CREATE TABLE `tb_item_cat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `cat_no` varchar(32) DEFAULT NULL COMMENT 'ç±»ç›®ç¼–å·',
+  `pcat_no` varchar(32) DEFAULT NULL COMMENT 'ä¸Šçº§ç±»ç›®ç¼–å·',
+  `item_level` int(11) DEFAULT NULL COMMENT 'ç±»ç›®çº§åˆ«',
+  `item_sort` int(11) DEFAULT NULL COMMENT 'æ’åºå·',
+  `status` char(1) DEFAULT 'Y' COMMENT 'çŠ¶æ€ Y:æœ‰æ•ˆ N:æ— æ•ˆ',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2048 DEFAULT CHARSET=utf8 COMMENT='å•†å“ç±»ç›®';
 
-alter table tb_item comment 'ÉÌÆ·ÁĞ±í';
+/*Table structure for table `tb_item_desc` */
 
-/*==============================================================*/
-/* Table: tb_item_cat                                           */
-/*==============================================================*/
-create table tb_item_cat
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   cat_no               varchar(32) comment 'ÀàÄ¿±àºÅ',
-   pcat_no              varchar(32) comment 'ÉÏ¼¶ÀàÄ¿±àºÅ',
-   item_level           int comment 'ÀàÄ¿¼¶±ğ',
-   item_sort            int comment 'ÅÅĞòºÅ',
-   status               char(1) default 'Y' comment '×´Ì¬ Y:ÓĞĞ§ N:ÎŞĞ§',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+DROP TABLE IF EXISTS `tb_item_desc`;
 
-alter table tb_item_cat comment 'ÉÌÆ·ÀàÄ¿';
+CREATE TABLE `tb_item_desc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `item_no` varchar(32) DEFAULT NULL COMMENT 'å•†å“ç¼–å·',
+  `item_desc` text COMMENT 'å•†å“æè¿°',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4096 DEFAULT CHARSET=utf8 COMMENT='å•†å“æè¿°';
 
-/*==============================================================*/
-/* Table: tb_item_desc                                          */
-/*==============================================================*/
-create table tb_item_desc
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_desc            text comment 'ÉÌÆ·ÃèÊö',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+/*Table structure for table `tb_item_param` */
 
-alter table tb_item_desc comment 'ÉÌÆ·ÃèÊö';
+DROP TABLE IF EXISTS `tb_item_param`;
 
-/*==============================================================*/
-/* Table: tb_item_param                                         */
-/*==============================================================*/
-create table tb_item_param
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_param           text comment 'ÉÌÆ·²ÎÊı',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+CREATE TABLE `tb_item_param` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `item_no` varchar(32) DEFAULT NULL COMMENT 'å•†å“ç¼–å·',
+  `item_param` text COMMENT 'å•†å“å‚æ•°',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='å•†å“å‚æ•°';
 
-alter table tb_item_param comment 'ÉÌÆ·²ÎÊı';
+/*Table structure for table `tb_order` */
 
-/*==============================================================*/
-/* Table: tb_order                                              */
-/*==============================================================*/
-create table tb_order
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   order_no             varchar(32) comment '¶©µ¥ºÅ',
-   order_time           datetime comment '¶©µ¥Ê±¼ä',
-   pay_time             datetime comment 'Ö§¸¶Ê±¼ä',
-   pay_type             int default 0 comment '¸¶¿î·½Ê½ 0:»õµ½¸¶¿î 1:ÔÚÏßÖ§¸¶ 2:¹«Ë¾×ªÕË',
-   order_status         int comment '¶©µ¥×´Ì¬',
-   order_amt            decimal(16,2) comment '¶©µ¥½ğ¶î',
-   coup_amt             decimal(16,2) comment 'ÓÅ»İ½ğ¶î',
-   trans_amt            decimal(16,2) comment 'ÔË·Ñ',
-   act_order_amt        decimal(16,2) comment 'Êµ¼Ê¶©µ¥½ğ¶î=¶©µ¥½ğ¶î+ÔË·Ñ-ÓÅ»İ½ğ¶î',
-   order_rate           decimal(16,6) comment 'Ë°ÂÊ',
-   act_tax_amt          decimal(16,2) comment 'Êµ¼Êº¬Ë°½ğ¶î=Êµ¼Ê¶©µ¥½ğ¶î*Ë°ÂÊ',
-   pay_amt              decimal(16,2) comment 'ÒÑ¸¶½ğ¶î',
-   buyler_id            varchar(32) comment 'ÓÃ»§±àºÅ',
-   shop_no              varchar(32) comment 'µêÆÌ±àºÅ',
-   seller_id            varchar(32) comment 'Âô¼Ò±àºÅ',
-   order_desc           varchar(256) comment '¶©µ¥ÃèÊö',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+DROP TABLE IF EXISTS `tb_order`;
 
-alter table tb_order comment '¶©µ¥±í';
+CREATE TABLE `tb_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `order_no` varchar(32) DEFAULT NULL COMMENT 'è®¢å•å·',
+  `order_time` datetime DEFAULT NULL COMMENT 'è®¢å•æ—¶é—´',
+  `pay_time` datetime DEFAULT NULL COMMENT 'æ”¯ä»˜æ—¶é—´',
+  `pay_type` int(11) DEFAULT '0' COMMENT 'ä»˜æ¬¾æ–¹å¼ 0:è´§åˆ°ä»˜æ¬¾ 1:åœ¨çº¿æ”¯ä»˜ 2:å…¬å¸è½¬è´¦',
+  `order_status` int(11) DEFAULT '0' COMMENT 'è®¢å•çŠ¶æ€ 0:å¾…ä»˜æ¬¾ 1:å¾…å‘è´§ 2:å·²æ”¶è´§',
+  `order_amt` decimal(16,2) DEFAULT NULL COMMENT 'è®¢å•é‡‘é¢',
+  `coup_amt` decimal(16,2) DEFAULT NULL COMMENT 'ä¼˜æƒ é‡‘é¢',
+  `trans_amt` decimal(16,2) DEFAULT NULL COMMENT 'è¿è´¹',
+  `act_order_amt` decimal(16,2) DEFAULT NULL COMMENT 'å®é™…è®¢å•é‡‘é¢=è®¢å•é‡‘é¢+è¿è´¹-ä¼˜æƒ é‡‘é¢',
+  `order_rate` decimal(16,6) DEFAULT NULL COMMENT 'ç¨ç‡',
+  `act_tax_amt` decimal(16,2) DEFAULT NULL COMMENT 'å®é™…å«ç¨é‡‘é¢=å®é™…è®¢å•é‡‘é¢*ç¨ç‡',
+  `pay_amt` decimal(16,2) DEFAULT NULL COMMENT 'å·²ä»˜é‡‘é¢',
+  `buyler_id` varchar(32) DEFAULT NULL COMMENT 'ç”¨æˆ·ç¼–å·',
+  `shop_no` varchar(32) DEFAULT NULL COMMENT 'åº—é“ºç¼–å·',
+  `seller_id` varchar(32) DEFAULT NULL COMMENT 'å–å®¶ç¼–å·',
+  `order_desc` varchar(256) DEFAULT NULL COMMENT 'è®¢å•æè¿°',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='è®¢å•è¡¨';
 
-/*==============================================================*/
-/* Table: tb_order_item                                         */
-/*==============================================================*/
-create table tb_order_item
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   order_no             varchar(32) comment '¶©µ¥ºÅ',
-   item_no              varchar(32) comment 'ÉÌÆ·±àºÅ',
-   item_name            varchar(128) comment 'ÉÌÆ·Ãû³Æ',
-   item_pic_url         varchar(256) comment 'ÉÌÆ·Í¼Æ¬µØÖ·',
-   price                decimal(16,2) comment 'µ¥¼Û',
-   num                  decimal(16,2) comment 'ÊıÁ¿',
-   amt                  decimal(16,2) comment '½ğ¶î',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+/*Table structure for table `tb_order_item` */
 
-alter table tb_order_item comment '¶©µ¥ÏêÇé±í';
+DROP TABLE IF EXISTS `tb_order_item`;
 
-/*==============================================================*/
-/* Table: tb_order_shipping                                     */
-/*==============================================================*/
-create table tb_order_shipping
-(
-   id                   int not null auto_increment comment 'Ö÷¼üid',
-   order_no             varchar(32) comment '¶©µ¥ºÅ',
-   recv_name            varchar(64) comment 'ÊÕ»õÈËĞÕÃû',
-   recv_phone           varchar(32) comment '¹Ì¶¨µç»°',
-   recv_mobile          varchar(32) comment 'ÒÆ¶¯µç»°',
-   recv_province        varchar(12) comment 'Ê¡·İ',
-   recv_city            varchar(16) comment '³ÇÊĞ',
-   recv_district        varchar(32) comment 'Çø¡¢ÏØ',
-   recv_address         varchar(256) comment 'ÊÕ»õÈËµØÖ·',
-   recv_zip             varchar(6) comment 'ÓÊÕş±àÂë',
-   status               char(1) comment 'ÊÇ·ñÉúĞ§ Y:ÓĞĞ§N:ÎŞĞ§',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+CREATE TABLE `tb_order_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `order_no` varchar(32) DEFAULT NULL COMMENT 'è®¢å•å·',
+  `item_no` varchar(32) DEFAULT NULL COMMENT 'å•†å“ç¼–å·',
+  `item_name` varchar(128) DEFAULT NULL COMMENT 'å•†å“åç§°',
+  `item_pic_url` varchar(256) DEFAULT NULL COMMENT 'å•†å“å›¾ç‰‡åœ°å€',
+  `price` decimal(16,2) DEFAULT NULL COMMENT 'å•ä»·',
+  `num` decimal(16,2) DEFAULT NULL COMMENT 'æ•°é‡',
+  `amt` decimal(16,2) DEFAULT NULL COMMENT 'é‡‘é¢',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='è®¢å•è¯¦æƒ…è¡¨';
 
-alter table tb_order_shipping comment '¶©µ¥ÎïÁ÷ĞÅÏ¢±í';
+/*Table structure for table `tb_order_shipping` */
 
-/*==============================================================*/
-/* Table: tb_user                                               */
-/*==============================================================*/
-create table tb_user
-(
-   id                   int not null auto_increment comment '×ÔÔöÖ÷¼üID',
-   user_no              VARCHAR(32) comment 'ÓÃ»§±àºÅ',
-   user_name            VARCHAR(64) comment 'ÓÃ»§Ãû³Æ',
-   nick_name            VARCHAR(64) comment 'êÇ³Æ',
-   phone_num            VARCHAR(64) comment 'ÊÖ»úºÅ',
-   email_addr           VARCHAR(64) comment 'ÓÊÏä',
-   login_pass           VARCHAR(256) comment 'µÇÂ¼ÃÜÂë',
-   status               CHAR(1) default 'Y' comment '×´Ì¬ Y:ÓĞĞ§ N:ÎŞĞ§',
-   memo                 VARCHAR(256) comment '±¸×¢',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   modi_time            datetime default CURRENT_TIMESTAMP comment 'ĞŞ¸ÄÊ±¼ä',
-   primary key (id)
-);
+DROP TABLE IF EXISTS `tb_order_shipping`;
 
-alter table tb_user comment 'ÓÃ»§±í';
+CREATE TABLE `tb_order_shipping` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®id',
+  `order_no` varchar(32) DEFAULT NULL COMMENT 'è®¢å•å·',
+  `recv_name` varchar(64) DEFAULT NULL COMMENT 'æ”¶è´§äººå§“å',
+  `recv_phone` varchar(32) DEFAULT NULL COMMENT 'å›ºå®šç”µè¯',
+  `recv_mobile` varchar(32) DEFAULT NULL COMMENT 'ç§»åŠ¨ç”µè¯',
+  `recv_province` varchar(12) DEFAULT NULL COMMENT 'çœä»½',
+  `recv_city` varchar(16) DEFAULT NULL COMMENT 'åŸå¸‚',
+  `recv_district` varchar(32) DEFAULT NULL COMMENT 'åŒºã€å¿',
+  `recv_address` varchar(256) DEFAULT NULL COMMENT 'æ”¶è´§äººåœ°å€',
+  `recv_zip` varchar(6) DEFAULT NULL COMMENT 'é‚®æ”¿ç¼–ç ',
+  `status` char(1) DEFAULT 'Y' COMMENT 'æ˜¯å¦ç”Ÿæ•ˆ Y:æœ‰æ•ˆN:æ— æ•ˆ',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='è®¢å•ç‰©æµä¿¡æ¯è¡¨';
 
+/*Table structure for table `tb_user` */
+
+DROP TABLE IF EXISTS `tb_user`;
+
+CREATE TABLE `tb_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'è‡ªå¢ä¸»é”®ID',
+  `user_no` varchar(32) DEFAULT NULL COMMENT 'ç”¨æˆ·ç¼–å·',
+  `user_name` varchar(64) DEFAULT NULL COMMENT 'ç”¨æˆ·åç§°',
+  `nick_name` varchar(64) DEFAULT NULL COMMENT 'æ˜µç§°',
+  `phone_num` varchar(64) DEFAULT NULL COMMENT 'æ‰‹æœºå·',
+  `email_addr` varchar(64) DEFAULT NULL COMMENT 'é‚®ç®±',
+  `login_pass` varchar(256) DEFAULT NULL COMMENT 'ç™»å½•å¯†ç ',
+  `status` char(1) DEFAULT 'Y' COMMENT 'çŠ¶æ€ Y:æœ‰æ•ˆ N:æ— æ•ˆ',
+  `memo` varchar(256) DEFAULT NULL COMMENT 'å¤‡æ³¨',
+  `create_time` datetime DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·è¡¨';
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
