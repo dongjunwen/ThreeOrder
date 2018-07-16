@@ -3,7 +3,9 @@ package com.three.order.orderrest.controller;
 import com.three.order.orderapi.api.IOrderService;
 import com.three.order.orderapi.enums.ResultCode;
 import com.three.order.orderapi.result.OrderResult;
+import com.three.order.orderapi.vo.TbOrderPayVo;
 import com.three.order.orderapi.vo.TbOrderVo;
+import com.three.order.orderrest.utils.IpUtils;
 import com.three.order.orderrest.utils.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,9 +50,21 @@ public class OrderController {
 
     @RequestMapping(value = "/pay",method = RequestMethod.POST)
     @ApiOperation(value="订单支付接口", notes="订单支付接口")
-    public OrderResult payOrder() {
-        //创建订单
-        OrderResult orderResult = iOrderService.payOrder();
+    public OrderResult payOrder(@RequestBody TbOrderPayVo tbOrderPayVo, HttpServletRequest request) {
+        //发起支付
+        OrderResult orderResult =OrderResult.newSuccess();
+        try{
+            if(RequestUtils.isLogin(request)){
+                orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
+                return orderResult;
+            }
+            //发起支付
+            tbOrderPayVo.setUserNo(RequestUtils.getCurrentUser(request).getUserNo());
+            tbOrderPayVo.setEquipIp(IpUtils.getIpAddr(request));
+            orderResult = iOrderService.payOrder(tbOrderPayVo);
+        }catch (Exception e){
+            orderResult.setErrorCode(ResultCode.FAIL);
+        }
         return orderResult;
     }
 

@@ -16,6 +16,9 @@ import java.util.List;
 @Data
 @ApiModel(value = "订单信息 TbOrderVo")
 public class TbOrderVo {
+    @NotNull(message = "付款方式不能为空")
+    @ApiModelProperty(value = "付款方式",required =true )
+    private String payType;
     @NotNull(message = "订单金额不能为空")
     @ApiModelProperty(value = "订单金额",required =true )
     private String orderAmt;
