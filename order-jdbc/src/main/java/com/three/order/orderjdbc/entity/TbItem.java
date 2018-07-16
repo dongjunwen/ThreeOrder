@@ -2,17 +2,14 @@ package com.three.order.orderjdbc.entity;
 
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
-@Component
 @Table(name = "tb_item")
 @Data
-public class TbItem {
+public class TbItem extends BaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -31,11 +28,4 @@ public class TbItem {
   @Column(name = "cat_no")
   private String catNo;
   private String status;
-  @Column(name = "create_time")
-  private java.sql.Timestamp createTime;
-  @Column(name = "modi_time")
-  private Date modiTime;
-
-
-
 }

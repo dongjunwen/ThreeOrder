@@ -11,6 +11,7 @@ import com.three.order.orderrest.utils.RequestUtils;
 import com.three.order.orderrest.utils.TokenUtils;
 import com.three.order.orderrest.validator.ValidatorUtil;
 import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,8 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "用户",description = "用户相关api")
+@Slf4j
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     IUserService iUserService;
@@ -40,7 +41,6 @@ public class UserController {
     @ApiOperation(value="用户注册", notes="根据tbUserVo对象注册用户信息")
     @ApiParam(name = "tbUserVo", value = "用户操作实体 tbUserVo",required = true)
     public OrderResult<Integer> createUser(@RequestBody TbUserVo tbUserVo){
-        ValidatorUtil.validateEntity(tbUserVo);//校验用户实体字段，
         try{
             if(StringUtils.isEmpty(tbUserVo.getEmailAddr())
                     &&StringUtils.isEmpty(tbUserVo.getPhoneNum())
@@ -55,17 +55,16 @@ public class UserController {
             }
             return  _result;
         }catch (Exception e){
-            logger.error("注册账号异常!{}",e);
+            log.error("注册账号异常!{}",e);
             return OrderResult.newError(ResultCode.FAIL);
         }
     }
 
 
-    @RequestMapping(value = "updateUser",method = RequestMethod.PUT)
+    @RequestMapping(value = "updateUser",method = RequestMethod.POST)
     @ApiOperation(value="修改用户", notes="根据tbUserVo对象修改用户")
     @ApiParam(name = "tbUserVo", value = "用户操作实体 tbUserVo",required = true)
     public OrderResult<String> updateUser(@RequestBody TbUserVo tbUserVo) {
-        ValidatorUtil.validateEntity(tbUserVo);//校验用户实体字段，
         try {
             OrderResult<Integer> _result = iUserService.updateUser(tbUserVo);
             if (!_result.isSuccess()) {
@@ -73,7 +72,7 @@ public class UserController {
             }
             return OrderResult.newSuccess("修改账号成功");
         } catch (Exception e) {
-            logger.error("用户修改异常!{}", e);
+            log.error("用户修改异常!{}", e);
             return OrderResult.newError(ResultCode.FAIL);
         }
     }
@@ -111,8 +110,6 @@ public class UserController {
     @PostMapping(value = "login")
     @ApiParam(name = "tbUserLoginVo", value = "用户操作实体 tbUserLoginVo",required = true)
     public OrderResult<String> login(@RequestBody TbUserLoginVo tbUserLoginVo, HttpServletRequest request){
-        //模拟登录
-        ValidatorUtil.validateEntity(tbUserLoginVo);//校验用户实体字段，
         try {
             String tokenStr= IDUtils.genIdStr("T");
             OrderResult<TbUserResultVo> orderResult=iUserService.login(tbUserLoginVo);
@@ -123,7 +120,7 @@ public class UserController {
             HttpSession session= request.getSession();
             tokenUtils.putUser(tokenStr,tbUserResultVo);
             session.setAttribute(CommonConstants.USER_SESSION_ATTR,tbUserResultVo);
-            logger.info("账号:{}登录成功",tbUserLoginVo.getLoginNo());
+            log.info("账号:{}登录成功",tbUserLoginVo.getLoginNo());
             return OrderResult.newSuccess(tokenStr);
         }catch(Exception e){
             return OrderResult.newError(ResultCode.USERNAME_OR_PASS_ERR);

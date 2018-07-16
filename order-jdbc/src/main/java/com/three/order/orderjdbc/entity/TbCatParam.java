@@ -1,14 +1,13 @@
 package com.three.order.orderjdbc.entity;
 
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Component
 @Table(name = "tb_cat_param")
-public class TbCatParam {
+@Data
+public class TbCatParam extends BaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -16,9 +15,6 @@ public class TbCatParam {
   private String catNo;
   @Column(name = "cat_param")
   private String catParam;
-  @Column(name = "create_time")
-  private Date createTime;
-  @Column(name = "modi_time")
-  private Date modiTime;
+
 
 }

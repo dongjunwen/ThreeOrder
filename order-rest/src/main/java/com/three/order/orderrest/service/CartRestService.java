@@ -58,7 +58,6 @@ public class CartRestService {
             }
             cartItemList.add(cartItem);
         }
-
         //把购物车写入cookie
         CookieUtils.setCookie(request, response, CommonConstants.CART_COOKIE, JSONObject.toJSONString(cartItemList), true);
         return  OrderResult.newSuccess();
