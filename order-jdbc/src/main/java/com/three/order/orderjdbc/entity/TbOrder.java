@@ -4,6 +4,7 @@ package com.three.order.orderjdbc.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -25,21 +26,23 @@ public class TbOrder extends BaseEntity{
   @Column(name = "order_status")
   private long orderStatus;
   @Column(name = "order_amt")
-  private double orderAmt;
+  private BigDecimal orderAmt;
   @Column(name = "coup_amt")
-  private double coupAmt;
+  private BigDecimal coupAmt;
   @Column(name = "trans_amt")
-  private double transAmt;
+  private BigDecimal transAmt;
   @Column(name = "act_order_amt")
-  private double actOrderAmt;
+  private BigDecimal actOrderAmt;
   @Column(name = "order_rate")
-  private double orderRate;
+  private BigDecimal orderRate;
   @Column(name = "act_tax_amt")
-  private double actTaxAmt;
+  private BigDecimal actTaxAmt;
   @Column(name = "pay_amt")
-  private double payAmt;
+  private BigDecimal payAmt;
   @Column(name = "buyler_id")
   private String buylerId;
+  @Column(name = "user_no")
+  private String userNo;
   @Column(name = "shop_no")
   private String shopNo;
   @Column(name = "seller_id")

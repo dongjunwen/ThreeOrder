@@ -25,6 +25,8 @@ public enum ResultCode {
     USER_HAS_EXISTS("1101","账号已存在!"),
     USER_NOT_EXISTS("1102","账号不存在!"),
 
+    //订单 1200-1299
+
 
 
     SUCCESS("200","操作成功"),

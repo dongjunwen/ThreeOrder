@@ -4,6 +4,7 @@ package com.three.order.orderjdbc.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -20,8 +21,8 @@ public class TbOrderItem extends BaseEntity{
   private String itemName;
   @Column(name = "item_pic_url")
   private String itemPicUrl;
-  private double price;
-  private double num;
-  private double amt;
+  private BigDecimal price;
+  private BigDecimal num;
+  private BigDecimal amt;
 
 }

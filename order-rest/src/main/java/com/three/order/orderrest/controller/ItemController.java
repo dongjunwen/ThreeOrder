@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,7 +26,7 @@ public class ItemController {
     private IItemService iItemService;
 
     //private static Logger logger= LoggerFactory.getLogger(ItemController.class);
-    @RequestMapping("/{itemNo}")
+    @RequestMapping(value = "/{itemNo}",method = RequestMethod.GET)
     public OrderResult showItem(@PathVariable String itemNo) {
         try {
             log.info("商品信息:{},查询成功",itemNo);
@@ -37,7 +38,7 @@ public class ItemController {
 
     }
 
-    @RequestMapping(value = "/desc/{itemNo}")
+    @RequestMapping(value = "/desc/{itemNo}",method = RequestMethod.GET)
     public OrderResult getItemDesc(@PathVariable String itemNo) {
         try {
             OrderResult itemResult = iItemService.getItemDesc(itemNo);
@@ -50,7 +51,7 @@ public class ItemController {
 
     }
 
-    @RequestMapping(value = "/param/{itemNo}")
+    @RequestMapping(value = "/param/{itemNo}",method = RequestMethod.GET)
     public OrderResult getItemParam(@PathVariable String itemNo) {
         try{
             OrderResult itemResult = iItemService.getItemParam(itemNo);
