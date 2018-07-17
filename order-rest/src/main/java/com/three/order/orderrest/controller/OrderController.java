@@ -9,33 +9,38 @@ import com.three.order.orderrest.utils.IpUtils;
 import com.three.order.orderrest.utils.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @Author: luiz
  * @Date: Create in 2018/07/03 19:24
  * @Description:订单接口
  */
-@RestController
+@Controller
 @RequestMapping("/api/order")
 @Api(tags = "订单",description = "订单相关api")
+@Slf4j
 public class OrderController {
 
     @Autowired
     private IOrderService iOrderService;
 
+    @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ApiOperation(value="订单创建接口", notes="订单创建接口")
     public OrderResult createOrder(@RequestBody TbOrderVo tbOrderVo, HttpServletRequest request) {
         OrderResult orderResult =OrderResult.newSuccess();
         try{
-            if(RequestUtils.isLogin(request)){
+            if(!RequestUtils.isLogin(request)){
                 orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
                 return orderResult;
             }
@@ -50,22 +55,46 @@ public class OrderController {
 
     @RequestMapping(value = "/pay",method = RequestMethod.POST)
     @ApiOperation(value="订单支付接口", notes="订单支付接口")
-    public OrderResult payOrder(@RequestBody TbOrderPayVo tbOrderPayVo, HttpServletRequest request) {
+    public ModelAndView payOrder(TbOrderPayVo tbOrderPayVo, HttpServletRequest request, HttpServletResponse response) {
         //发起支付
-        OrderResult orderResult =OrderResult.newSuccess();
+        ModelAndView modelAndView=new ModelAndView();
+        String retMsg="";
+        String respData="";
         try{
-            if(RequestUtils.isLogin(request)){
-                orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
-                return orderResult;
+            if(!RequestUtils.isLogin(request)){
+               // orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
+                modelAndView.setViewName("/channel/error");
+                return modelAndView;
             }
             //发起支付
             tbOrderPayVo.setUserNo(RequestUtils.getCurrentUser(request).getUserNo());
             tbOrderPayVo.setEquipIp(IpUtils.getIpAddr(request));
-            orderResult = iOrderService.payOrder(tbOrderPayVo);
+            OrderResult orderResult = iOrderService.payOrder(tbOrderPayVo);
+            if(orderResult.isSuccess()){
+                respData=(String) orderResult.getData();
+                log.info("[订单创建]返回数据:{}",respData);
+                response.setContentType("text/html; charset=utf-8");
+                OutputStream respOutStream= null;
+                try {
+                    respOutStream = response.getOutputStream();
+                    respOutStream.write(respData.getBytes("utf-8"));
+                    respOutStream.flush();
+                    respOutStream.close();
+                    return null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    retMsg=e.getMessage();
+                    modelAndView.setViewName("error");
+                }
+            }
         }catch (Exception e){
-            orderResult.setErrorCode(ResultCode.FAIL);
+           log.error("[订单支付]发生异常!{}",e);
+            retMsg=e.getMessage();
         }
-        return orderResult;
+        modelAndView.addObject("retMsg",retMsg);
+        modelAndView.addObject("respData",respData);
+        modelAndView.setViewName("channel/orderSuccess");
+        return modelAndView;
     }
 
 }

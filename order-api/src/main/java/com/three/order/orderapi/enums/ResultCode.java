@@ -26,7 +26,8 @@ public enum ResultCode {
     USER_NOT_EXISTS("1102","账号不存在!"),
 
     //订单 1200-1299
-
+    ORDER_NOT_EXISTS("1200", "订单不存在"),
+    PAY_CANT_PROCESS("1201", "支付结果无须再次处理"),
 
 
     SUCCESS("200","操作成功"),

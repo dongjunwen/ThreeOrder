@@ -22,6 +22,7 @@ public class RequestUtils {
      */
     public static TbUserResultVo getCurrentUser(HttpServletRequest request){
         HttpSession session= request.getSession(false);
+        if(session==null) return null;
         TbUserResultVo tbUserResultVo= (TbUserResultVo)session.getAttribute(CommonConstants.USER_SESSION_ATTR);
         return tbUserResultVo;
     }

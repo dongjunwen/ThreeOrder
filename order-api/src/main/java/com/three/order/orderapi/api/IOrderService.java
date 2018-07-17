@@ -1,6 +1,7 @@
 package com.three.order.orderapi.api;
 
 import com.three.order.orderapi.result.OrderResult;
+import com.three.order.orderapi.vo.TbOrderPayNotifyVo;
 import com.three.order.orderapi.vo.TbOrderPayVo;
 import com.three.order.orderapi.vo.TbOrderVo;
 
@@ -14,4 +15,6 @@ public interface IOrderService {
     OrderResult createOrder(TbOrderVo tbOrderVo);
 
     OrderResult payOrder(TbOrderPayVo tbOrderPayVo);
+
+    OrderResult notifyOrder(TbOrderPayNotifyVo tbOrderPayNotifyVo);
 }

@@ -115,8 +115,9 @@ CREATE TABLE `tb_order` (
   `order_desc` varchar(256) DEFAULT NULL COMMENT '订单描述',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `user_no` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 /*Table structure for table `tb_order_item` */
 
@@ -134,7 +135,7 @@ CREATE TABLE `tb_order_item` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
 /*Table structure for table `tb_order_shipping` */
 
@@ -155,7 +156,28 @@ CREATE TABLE `tb_order_shipping` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单物流信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='订单物流信息表';
+
+/*Table structure for table `tb_pay_log` */
+
+DROP TABLE IF EXISTS `tb_pay_log`;
+
+CREATE TABLE `tb_pay_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `order_no` varchar(32) DEFAULT NULL COMMENT '订单号',
+  `pay_seq_no` varchar(32) DEFAULT NULL COMMENT '付款流水号',
+  `pay_time` datetime DEFAULT NULL COMMENT '支付成功时间',
+  `pay_way` varchar(32) DEFAULT '0' COMMENT '付款方式 ',
+  `pay_status` int(11) DEFAULT NULL COMMENT '支付状态 0:等待支付 1:支付成功  2:支付失败',
+  `resp_code` varchar(32) DEFAULT NULL COMMENT '响应码',
+  `resp_msg` varchar(64) DEFAULT NULL COMMENT '响应内容',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modi_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `pay_title` varchar(255) DEFAULT NULL,
+  `user_no` varchar(255) DEFAULT NULL,
+  `pay_trade_no` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='付款流水表';
 
 /*Table structure for table `tb_user` */
 

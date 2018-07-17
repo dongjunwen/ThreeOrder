@@ -26,9 +26,11 @@ spring:
     active: product
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/threeorder_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: root
+    url: jdbc:mysql://111.231.141.23:3306/threeorder_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    #username: root
+    #password: root
+    username: admin
+    password: admin_!@#123QWE
     #password: sun1001
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
@@ -58,5 +60,25 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/views/
+    suffix: .html
+    mode: html5
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+  resources:
+      #static-locations: classpath:/static/
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
 logging:
   config: classpath:logback-spring.xml
+three:
+  order:
+   notifyUrl: http://111.231.141.23:9007/api/pay/notifyResult
+   forwardUrl: http://111.231.141.23:9006/channel/successForward
+   payUrl: http://111.231.141.23:9005/api/trade

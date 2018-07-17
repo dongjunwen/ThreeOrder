@@ -14,7 +14,7 @@ import java.util.List;
  * @Modify :
  **/
 @Data
-@ApiModel(value = "订单信息 TbOrderVo")
+@ApiModel(value = "订单支付信息 TbOrderPayVo")
 public class TbOrderPayVo {
     @NotNull(message = "订单号不能为空")
     @ApiModelProperty(value = "订单号",required =true )
@@ -23,6 +23,7 @@ public class TbOrderPayVo {
     private String userNo;
     @ApiModelProperty(value = "设备ip",required =false )
     private String equipIp;
+    @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value = "支付方式",required =true )
     private String payWay;
 }
