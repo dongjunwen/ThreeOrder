@@ -64,7 +64,7 @@ public class OrderController {
                 orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
                 return orderResult;
             }
-            //创建订单
+            //订单查询
             tbOrderQueryVo.setUserNo(RequestUtils.getCurrentUser(request).getUserNo());
             orderResult = iOrderService.findOrder(tbOrderQueryVo);
         }catch (Exception e){

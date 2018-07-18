@@ -20,7 +20,7 @@ public class TbOrderQueryVo {
     @ApiModelProperty(value = "用户编号",required =false )
     private String userNo;
     @ApiModelProperty(value = "订单状态",required =false )
-    private int orderStatus;
+    private String orderStatus;
     @ApiModelProperty(value = "当前页",required =false )
     private int currentPage=1;
     @ApiModelProperty(value = "每页显示条数",required =false )
