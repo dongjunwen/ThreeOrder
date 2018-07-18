@@ -24,8 +24,14 @@ import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -190,5 +196,23 @@ public class OrderService implements IOrderService {
         //修改订单状态
         tbOrderResp.updateStatus(oldTbPayLog.getOrderNo(),orderStatus,new Date());
         return OrderResult.newSuccess();
+    }
+
+    @Override
+    public OrderResult findOrder(TbOrderQueryVo tbOrderQueryVo) {
+        Pageable pageable = new PageRequest(tbOrderQueryVo.getCurrentPage(), tbOrderQueryVo.getPageSize(), Sort.Direction.ASC, "id");
+        Page<TbOrder> tbOrderPage=tbOrderResp.findAll(new Specification<TbOrder>(){
+            @Override
+            public Predicate toPredicate(Root<TbOrder> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<Predicate>();
+                    list.add(criteriaBuilder.equal(root.get("userNo").as(String.class), tbOrderQueryVo.getUserNo()));
+                if(null!=tbOrderQueryVo.getOrderStatus()&&!"".equals(tbOrderQueryVo.getOrderStatus())){
+                    list.add(criteriaBuilder.equal(root.get("orderStatus").as(Integer.class), tbOrderQueryVo.getOrderStatus()));
+                }
+                Predicate[] p = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(p));
+            }
+        },pageable);
+        return OrderResult.newSuccess(tbOrderPage);
     }
 }

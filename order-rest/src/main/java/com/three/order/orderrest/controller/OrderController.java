@@ -4,6 +4,7 @@ import com.three.order.orderapi.api.IOrderService;
 import com.three.order.orderapi.enums.ResultCode;
 import com.three.order.orderapi.result.OrderResult;
 import com.three.order.orderapi.vo.TbOrderPayVo;
+import com.three.order.orderapi.vo.TbOrderQueryVo;
 import com.three.order.orderapi.vo.TbOrderVo;
 import com.three.order.orderrest.utils.IpUtils;
 import com.three.order.orderrest.utils.RequestUtils;
@@ -53,6 +54,25 @@ public class OrderController {
         return orderResult;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/findOrder",method = RequestMethod.POST)
+    @ApiOperation(value="订单查询接口", notes="订单查询接口")
+    public OrderResult findOrder(@RequestBody TbOrderQueryVo tbOrderQueryVo, HttpServletRequest request) {
+        OrderResult orderResult =OrderResult.newSuccess();
+        try{
+            if(!RequestUtils.isLogin(request)){
+                orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
+                return orderResult;
+            }
+            //创建订单
+            tbOrderQueryVo.setUserNo(RequestUtils.getCurrentUser(request).getUserNo());
+            orderResult = iOrderService.findOrder(tbOrderQueryVo);
+        }catch (Exception e){
+            orderResult.setErrorCode(ResultCode.FAIL);
+        }
+        return orderResult;
+    }
+
     @RequestMapping(value = "/pay",method = RequestMethod.POST)
     @ApiOperation(value="订单支付接口", notes="订单支付接口")
     public ModelAndView payOrder(TbOrderPayVo tbOrderPayVo, HttpServletRequest request, HttpServletResponse response) {
@@ -62,8 +82,8 @@ public class OrderController {
         String respData="";
         try{
             if(!RequestUtils.isLogin(request)){
-               // orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
-                modelAndView.setViewName("/channel/error");
+                modelAndView.addObject("retMsg","用户未登录");
+                modelAndView.setViewName("/error");
                 return modelAndView;
             }
             //发起支付
@@ -93,7 +113,7 @@ public class OrderController {
         }
         modelAndView.addObject("retMsg",retMsg);
         modelAndView.addObject("respData",respData);
-        modelAndView.setViewName("channel/orderSuccess");
+        modelAndView.setViewName("orderSuccess");
         return modelAndView;
     }
 

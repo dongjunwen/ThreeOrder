@@ -3,6 +3,7 @@ package com.three.order.orderjdbc.respository;
 import com.three.order.orderjdbc.entity.TbOrder;
 import com.three.order.orderjdbc.entity.TbUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +20,7 @@ import java.util.Date;
  * @Modify :
  **/
 @Repository
-public interface TbOrderResp extends JpaRepository<TbOrder,Long> {
+public interface TbOrderResp extends JpaRepository<TbOrder,Long>,JpaSpecificationExecutor<TbOrder> {
 
 
     TbOrder findByOrderNo(String orderNo);
