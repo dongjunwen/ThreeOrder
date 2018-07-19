@@ -31,10 +31,12 @@ public class ResourceProcessor implements EnvironmentPostProcessor {
         if (filePath.exists()) {
             File[] files=filePath.listFiles();
             MutablePropertySources propertySources = configurableEnvironment.getPropertySources();
+            int i=0;
             for(File file:files){
+                i++;
                 Properties properties = loadProperties(file);
                 logger.info("[Config]资源加载{}",properties.toString());
-                propertySources.addLast(new PropertiesPropertySource("Config", properties));
+                propertySources.addLast(new PropertiesPropertySource("Config"+i, properties));
             }
 
         }
