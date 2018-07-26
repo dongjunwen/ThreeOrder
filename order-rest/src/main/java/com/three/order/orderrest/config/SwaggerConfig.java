@@ -79,7 +79,14 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     protected void addInterceptors(InterceptorRegistry registry) {
         //需要登录的接口需要在这里配置
-        registry.addInterceptor(getInterceptor()).addPathPatterns("/**").excludePathPatterns("/api/user/login");
+        registry.addInterceptor(getInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/api/user/login")
+                .excludePathPatterns("/api/pay/**")
+                .excludePathPatterns("/show/**")
+                .excludePathPatterns("/api/search/**")
+                .excludePathPatterns("/api/cart/**")
+        ;
         super.addInterceptors(registry);
     }
 
