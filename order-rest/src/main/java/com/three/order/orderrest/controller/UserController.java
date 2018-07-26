@@ -64,7 +64,7 @@ public class UserController {
     @RequestMapping(value = "updateUser",method = RequestMethod.POST)
     @ApiOperation(value="修改用户", notes="根据tbUserVo对象修改用户")
     @ApiParam(name = "tbUserVo", value = "用户操作实体 tbUserVo",required = true)
-    public OrderResult<String> updateUser(@RequestBody TbUserVo tbUserVo) {
+    public OrderResult<String> updateUser(TbUserVo tbUserVo) {
         try {
             OrderResult<Integer> _result = iUserService.updateUser(tbUserVo);
             if (!_result.isSuccess()) {
