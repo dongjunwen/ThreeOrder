@@ -8,6 +8,7 @@ import com.three.order.orderapi.vo.TbOrderQueryVo;
 import com.three.order.orderapi.vo.TbOrderVo;
 import com.three.order.orderrest.utils.IpUtils;
 import com.three.order.orderrest.utils.RequestUtils;
+import com.three.order.orderrest.utils.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -81,13 +82,8 @@ public class OrderController {
         String retMsg="";
         String respData="";
         try{
-            if(!RequestUtils.isLogin(request)){
-                modelAndView.addObject("retMsg","用户未登录");
-                modelAndView.setViewName("/error");
-                return modelAndView;
-            }
             //发起支付
-            tbOrderPayVo.setUserNo(RequestUtils.getCurrentUser(request).getUserNo());
+            tbOrderPayVo.setUserNo(UserThreadLocal.get().getUserNo());
             tbOrderPayVo.setEquipIp(IpUtils.getIpAddr(request));
             OrderResult orderResult = iOrderService.payOrder(tbOrderPayVo);
             if(orderResult.isSuccess()){
