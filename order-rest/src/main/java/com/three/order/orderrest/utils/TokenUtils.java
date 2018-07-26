@@ -23,4 +23,8 @@ public class TokenUtils {
     public  void putUser(String tokenStr,TbUserResultVo tbUserResultVo){
          redisTemplate.opsForValue().setIfAbsent(CommonConstants.USER_TOKEN+tokenStr,tbUserResultVo);
     }
+
+    public  Boolean delUser(String tokenStr){
+        return redisTemplate.delete(CommonConstants.USER_TOKEN+tokenStr);
+    }
 }

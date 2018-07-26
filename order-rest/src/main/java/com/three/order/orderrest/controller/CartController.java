@@ -33,7 +33,7 @@ public class CartController {
     @PostMapping("/add")
     @ApiOperation(value="购物车添加商品", notes="购物车添加商品")
     @ApiParam(name = "cartItemVo", value = "商品实体 cartItemVo",required = true)
-    public OrderResult addCartItem(@RequestBody CartItemVo cartItemVo,HttpServletRequest request,HttpServletResponse response) {
+    public OrderResult addCartItem(CartItemVo cartItemVo,HttpServletRequest request,HttpServletResponse response) {
         try{
             return cartRestService.addCartItem(cartItemVo,request,response);
         }catch (Exception e){
@@ -58,7 +58,7 @@ public class CartController {
     @PostMapping("/update")
     @ApiOperation(value="购物车商品数量更新", notes="购物车商品数量更新")
     @ApiParam(name = "cartItemVo", value = "商品实体 cartItemVo",required = true)
-    public OrderResult updateCartItem(@RequestBody CartItemVo cartItemVo,HttpServletRequest request, HttpServletResponse response) {
+    public OrderResult updateCartItem(CartItemVo cartItemVo,HttpServletRequest request, HttpServletResponse response) {
         try{
            return  cartRestService.updateCartItem(cartItemVo.getItemNo(), cartItemVo.getItemNum(),request,response);
         }catch (Exception e){

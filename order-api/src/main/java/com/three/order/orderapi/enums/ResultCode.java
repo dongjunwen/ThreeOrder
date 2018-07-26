@@ -24,6 +24,7 @@ public enum ResultCode {
     USER_REGIST_CHECK_ERROR("1100","手机号、邮箱、昵称不能全部为空!"),
     USER_HAS_EXISTS("1101","账号已存在!"),
     USER_NOT_EXISTS("1102","账号不存在!"),
+    USER_LOGGED_FAILURE("1103","用户登录失效"),
 
     //订单 1200-1299
     ORDER_NOT_EXISTS("1200", "订单不存在"),

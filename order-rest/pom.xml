@@ -65,10 +65,6 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session -->
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-data-redis</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>com.three.order</groupId>

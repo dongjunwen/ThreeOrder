@@ -9,6 +9,7 @@ import com.three.order.ordercommon.constant.CommonConstants;
 import com.three.order.ordercommon.utils.IDUtils;
 import com.three.order.orderrest.utils.RequestUtils;
 import com.three.order.orderrest.utils.TokenUtils;
+import com.three.order.orderrest.utils.UserThreadLocal;
 import com.three.order.orderrest.validator.ValidatorUtil;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class UserController {
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ApiOperation(value="用户注册", notes="根据tbUserVo对象注册用户信息")
     @ApiParam(name = "tbUserVo", value = "用户操作实体 tbUserVo",required = true)
-    public OrderResult<Integer> createUser(@RequestBody TbUserVo tbUserVo){
+    public OrderResult<Integer> createUser( TbUserVo tbUserVo){
         try{
             if(StringUtils.isEmpty(tbUserVo.getEmailAddr())
                     &&StringUtils.isEmpty(tbUserVo.getPhoneNum())
@@ -78,12 +79,8 @@ public class UserController {
     }
     @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
     @ApiOperation(value="根据request当前登录信息", notes="根据request当前登录信息")
-    public OrderResult<TbUserResultVo> getCurrentUser(HttpServletRequest request){
-        TbUserResultVo tbUserResultVo=RequestUtils.getCurrentUser(request);
-        if(tbUserResultVo==null){
-            return OrderResult.newError(ResultCode.USER_NO_LOGGED_IN);
-        }
-        return OrderResult.newSuccess(tbUserResultVo);
+    public OrderResult<TbUserResultVo> getCurrentUser(){
+        return OrderResult.newSuccess(UserThreadLocal.get());
 
     }
 
@@ -91,11 +88,7 @@ public class UserController {
     @ApiOperation(value="根据Token当前登录信息", notes="根据Token当前登录信息")
     @ApiImplicitParam(name = "tokenStr", value = "token值", required = true, dataType = "string",paramType = "path")
     public OrderResult<TbUserResultVo> getCurrentUserByToken(@PathVariable("tokenStr") String tokenStr){
-        TbUserResultVo tbUserResultVo=tokenUtils.getUserByToken(tokenStr);
-        if(tbUserResultVo==null){
-            return OrderResult.newError(ResultCode.USER_NO_LOGGED_IN);
-        }
-        return OrderResult.newSuccess(tbUserResultVo);
+        return OrderResult.newSuccess(UserThreadLocal.get());
 
     }
 
@@ -109,7 +102,7 @@ public class UserController {
     @ApiOperation(value = "登录",notes = "登录接口")
     @PostMapping(value = "login")
     @ApiParam(name = "tbUserLoginVo", value = "用户操作实体 tbUserLoginVo",required = true)
-    public OrderResult<String> login(@RequestBody TbUserLoginVo tbUserLoginVo, HttpServletRequest request){
+    public OrderResult<String> login(TbUserLoginVo tbUserLoginVo, HttpServletRequest request){
         try {
             String tokenStr= IDUtils.genIdStr("T");
             OrderResult<TbUserResultVo> orderResult=iUserService.login(tbUserLoginVo);
@@ -117,9 +110,7 @@ public class UserController {
                 return OrderResult.newError(orderResult.getRetCode(),orderResult.getRetMsg());
             }
             TbUserResultVo tbUserResultVo=orderResult.getData();
-            HttpSession session= request.getSession();
             tokenUtils.putUser(tokenStr,tbUserResultVo);
-            session.setAttribute(CommonConstants.USER_SESSION_ATTR,tbUserResultVo);
             log.info("账号:{}登录成功",tbUserLoginVo.getLoginNo());
             return OrderResult.newSuccess(tokenStr);
         }catch(Exception e){
@@ -130,9 +121,8 @@ public class UserController {
     @ApiOperation(value = "退出登录")
     @GetMapping(value="logout")
     public OrderResult<String> logout(HttpServletRequest request){
-        HttpSession session= request.getSession(false);
-        session.removeAttribute(CommonConstants.USER_SESSION_ATTR);
-        return OrderResult.newSuccess("已退出!");
+        String token=request.getParameter("tokenStr");
+        return tokenUtils.delUser(token)?OrderResult.newSuccess("已退出!"):OrderResult.newSuccess("退出失败!");
     }
 
 

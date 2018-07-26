@@ -38,7 +38,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ApiOperation(value="订单创建接口", notes="订单创建接口")
-    public OrderResult createOrder(@RequestBody TbOrderVo tbOrderVo, HttpServletRequest request) {
+    public OrderResult createOrder( TbOrderVo tbOrderVo, HttpServletRequest request) {
         OrderResult orderResult =OrderResult.newSuccess();
         try{
             if(!RequestUtils.isLogin(request)){
@@ -57,7 +57,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping(value = "/findOrder",method = RequestMethod.POST)
     @ApiOperation(value="订单查询接口", notes="订单查询接口")
-    public OrderResult findOrder(@RequestBody TbOrderQueryVo tbOrderQueryVo, HttpServletRequest request) {
+    public OrderResult findOrder( TbOrderQueryVo tbOrderQueryVo, HttpServletRequest request) {
         OrderResult orderResult =OrderResult.newSuccess();
         try{
             if(!RequestUtils.isLogin(request)){
