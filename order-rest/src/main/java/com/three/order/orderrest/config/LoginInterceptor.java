@@ -23,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor{
     private TokenUtils tokenUtils;
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token=request.getParameter("tokenStr");
+        String token=request.getHeader("Authorization");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         if (StringUtils.isBlank(token)){
             //用户未登录

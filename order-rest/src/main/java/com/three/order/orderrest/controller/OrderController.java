@@ -12,6 +12,9 @@ import com.three.order.orderrest.utils.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +35,12 @@ import java.io.OutputStream;
 @Api(tags = "订单",description = "订单相关api")
 @Slf4j
 public class OrderController {
+    private static final Logger logger= LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
     private IOrderService iOrderService;
+    @Autowired
+    RequestUtils requestUtils;
 
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
@@ -42,14 +48,11 @@ public class OrderController {
     public OrderResult createOrder( TbOrderVo tbOrderVo, HttpServletRequest request) {
         OrderResult orderResult =OrderResult.newSuccess();
         try{
-            if(!RequestUtils.isLogin(request)){
-                orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
-                return orderResult;
-            }
             //创建订单
-            tbOrderVo.setUserNo(RequestUtils.getCurrentUser(request).getUserNo());
+            tbOrderVo.setUserNo(requestUtils.getCurrentUser(request).getUserNo());
             orderResult = iOrderService.createOrder(tbOrderVo);
         }catch (Exception e){
+            logger.error("创建订单失败:{}",e);
             orderResult.setErrorCode(ResultCode.FAIL);
         }
         return orderResult;
@@ -61,12 +64,8 @@ public class OrderController {
     public OrderResult findOrder( TbOrderQueryVo tbOrderQueryVo, HttpServletRequest request) {
         OrderResult orderResult =OrderResult.newSuccess();
         try{
-            if(!RequestUtils.isLogin(request)){
-                orderResult.setErrorCode(ResultCode.USER_NO_LOGGED_IN);
-                return orderResult;
-            }
             //订单查询
-            tbOrderQueryVo.setUserNo(RequestUtils.getCurrentUser(request).getUserNo());
+            tbOrderQueryVo.setUserNo(requestUtils.getCurrentUser(request).getUserNo());
             orderResult = iOrderService.findOrder(tbOrderQueryVo);
         }catch (Exception e){
             orderResult.setErrorCode(ResultCode.FAIL);

@@ -1,11 +1,10 @@
 package com.three.order.orderrest.utils;
 
 import com.three.order.orderapi.vo.TbUserResultVo;
-import com.three.order.ordercommon.constant.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @Author:luiz
@@ -13,17 +12,20 @@ import javax.servlet.http.HttpSession;
  * @Descripton:
  * @Modify :
  **/
+@Component
 public class RequestUtils {
+    @Autowired
+    TokenUtils tokenUtils;
 
     /**
      * 根据request获取当前登录账号
      * @param request
      * @return
      */
-    public static TbUserResultVo getCurrentUser(HttpServletRequest request){
-        HttpSession session= request.getSession(false);
-        if(session==null) return null;
-        TbUserResultVo tbUserResultVo= (TbUserResultVo)session.getAttribute(CommonConstants.USER_SESSION_ATTR);
+    public  TbUserResultVo getCurrentUser(HttpServletRequest request){
+        String tokenStr=request.getHeader("Authorization");
+        if(tokenStr==null) return null;
+        TbUserResultVo tbUserResultVo= tokenUtils.getUserByToken(tokenStr);
         return tbUserResultVo;
     }
 
@@ -32,7 +34,7 @@ public class RequestUtils {
      * @param request
      * @return
      */
-    public static boolean isLogin(HttpServletRequest request){
+    public  boolean isLogin(HttpServletRequest request){
         if(getCurrentUser(request)==null){
             return false;
         }

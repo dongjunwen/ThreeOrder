@@ -15,7 +15,6 @@
 		<groupId>com.three.order</groupId>
 		<artifactId>order</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<properties>
@@ -25,10 +24,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -54,10 +49,7 @@
 			<artifactId>order-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
-		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -76,6 +68,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
+        
 	</dependencies>
 
 	<build>

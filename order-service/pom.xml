@@ -15,7 +15,6 @@
 		<groupId>com.three.order</groupId>
 		<artifactId>order</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<properties>

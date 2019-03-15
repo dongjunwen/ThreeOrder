@@ -65,7 +65,6 @@ public class OrderService implements IOrderService {
     @Override
     public OrderResult createOrder(TbOrderVo tbOrderVo) {
         java.util.Date nowDate=new java.util.Date();
-
         String orderNo= IDUtils.genIdStr("O");
         TbOrder tbOrder=new TbOrder();
         tbOrder.setUserNo(tbOrderVo.getUserNo());
@@ -87,27 +86,32 @@ public class OrderService implements IOrderService {
         tbOrderResp.save(tbOrder);
 
         List<TbOrderItem> tbOrderItemList= Lists.newArrayList();
-        for(TbItemVo tbItemVo:tbOrderVo.getTbItemVoList()){
-            TbOrderItem tbOrderItem=new TbOrderItem();
-            tbOrderItem.setItemNo(tbItemVo.getItemNo());
-            tbOrderItem.setItemName(tbItemVo.getItemTitle());
-            tbOrderItem.setAmt(tbItemVo.getPrice());
-            tbOrderItem.setItemPicUrl(tbItemVo.getPicUrl());
-            tbOrderItem.setNum(tbItemVo.getNum());
-            tbOrderItem.setPrice(tbItemVo.getPrice());
-            tbOrderItem.setOrderNo(orderNo);
-            tbOrderItem.setCreateTime(nowDate);
-            tbOrderItem.setModiTime(nowDate);
-            tbOrderItemList.add(tbOrderItem);
+        if(tbOrderItemList!=null){
+            for(TbItemVo tbItemVo:tbOrderVo.getTbItemVoList()){
+                TbOrderItem tbOrderItem=new TbOrderItem();
+                tbOrderItem.setItemNo(tbItemVo.getItemNo());
+                tbOrderItem.setItemName(tbItemVo.getItemTitle());
+                tbOrderItem.setAmt(tbItemVo.getPrice());
+                tbOrderItem.setItemPicUrl(tbItemVo.getPicUrl());
+                tbOrderItem.setNum(tbItemVo.getNum());
+                tbOrderItem.setPrice(tbItemVo.getPrice());
+                tbOrderItem.setOrderNo(orderNo);
+                tbOrderItem.setCreateTime(nowDate);
+                tbOrderItem.setModiTime(nowDate);
+                tbOrderItemList.add(tbOrderItem);
+            }
+            tbOrderItemResp.saveAll(tbOrderItemList);
         }
-        tbOrderItemResp.saveAll(tbOrderItemList);
-        TbOrderShipping tbOrderShipping=new TbOrderShipping();
         TbOrderShippingVo tbOrderShippingVo=tbOrderVo.getTbOrderShippingVo();
-        tbOrderShipping.setOrderNo(orderNo);
-        BeanUtils.copyProperties(tbOrderShippingVo,tbOrderShipping);
-        tbOrderShipping.setCreateTime(nowDate);
-        tbOrderShipping.setModiTime(nowDate);
-        tbOrderShippingResp.save(tbOrderShipping);
+        if(tbOrderShippingVo!=null){
+            TbOrderShipping tbOrderShipping=new TbOrderShipping();
+            tbOrderShipping.setOrderNo(orderNo);
+            BeanUtils.copyProperties(tbOrderShippingVo,tbOrderShipping);
+            tbOrderShipping.setCreateTime(nowDate);
+            tbOrderShipping.setModiTime(nowDate);
+            tbOrderShippingResp.save(tbOrderShipping);
+
+        }
 
         return OrderResult.newSuccess(orderNo);
     }

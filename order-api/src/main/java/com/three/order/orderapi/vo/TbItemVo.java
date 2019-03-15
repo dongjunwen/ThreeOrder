@@ -10,8 +10,8 @@ public class TbItemVo{
       private String itemNo;
       private String itemTitle;
       private String sellPoint;
-      private BigDecimal price;
-      private BigDecimal num;
+      private BigDecimal price=BigDecimal.ZERO;
+      private BigDecimal num=BigDecimal.ZERO;
       private String barcode;
       private String picUrl;
 }

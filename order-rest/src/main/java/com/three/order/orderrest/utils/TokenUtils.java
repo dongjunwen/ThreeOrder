@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class TokenUtils {
     @Autowired
     RedisTemplate redisTemplate;
+
     public  TbUserResultVo getUserByToken(String tokenStr){
         return (TbUserResultVo)redisTemplate.opsForValue().get(CommonConstants.USER_TOKEN+tokenStr);
     }

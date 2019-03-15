@@ -1,6 +1,5 @@
 package com.three.order.ordercommon.utils;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
@@ -380,16 +379,5 @@ public class HttpClientUtil {
     }
 
 
-    /**
-     * 测试方法
-     * @param args
-     */
-    public static void main(String[] args) throws Exception {
-        Map params= Maps.newHashMap();
-        params.put("orderNo", "12345788");
-        params.put("bizCode", "aaa");
-        params.put("auditResult", "01");
-        params.put("auditComment", "测试");
-        HttpClientUtil.doPost("http://10.103.20.26:9323/risk/notify.html",params);
-    }
+
 }

@@ -13,6 +13,7 @@ import com.three.order.orderrest.utils.UserThreadLocal;
 import com.three.order.orderrest.validator.ValidatorUtil;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +33,14 @@ import javax.servlet.http.HttpSession;
 @Api(tags = "用户",description = "用户相关api")
 @Slf4j
 public class UserController {
+    private static Logger logger=LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     IUserService iUserService;
     @Autowired
     TokenUtils tokenUtils;
+    @Autowired
+    RequestUtils requestUtils;
 
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ApiOperation(value="用户注册", notes="根据tbUserVo对象注册用户信息")
@@ -79,18 +83,11 @@ public class UserController {
     }
     @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
     @ApiOperation(value="根据request当前登录信息", notes="根据request当前登录信息")
-    public OrderResult<TbUserResultVo> getCurrentUser(){
-        return OrderResult.newSuccess(UserThreadLocal.get());
+    public OrderResult<TbUserResultVo> getCurrentUser(HttpServletRequest request){
+        return OrderResult.newSuccess(requestUtils.getCurrentUser(request));
 
     }
 
-    @RequestMapping(value = "/getCurrentUserByToken/{tokenStr}",method = RequestMethod.GET)
-    @ApiOperation(value="根据Token当前登录信息", notes="根据Token当前登录信息")
-    @ApiImplicitParam(name = "tokenStr", value = "token值", required = true, dataType = "string",paramType = "path")
-    public OrderResult<TbUserResultVo> getCurrentUserByToken(@PathVariable("tokenStr") String tokenStr){
-        return OrderResult.newSuccess(UserThreadLocal.get());
-
-    }
 
     @RequestMapping(value = "/{userNo}",method = RequestMethod.GET)
     @ApiOperation(value="获取用户详细信息", notes="根据url的用户编号来获取用户详细信息")
@@ -114,6 +111,7 @@ public class UserController {
             log.info("账号:{}登录成功",tbUserLoginVo.getLoginNo());
             return OrderResult.newSuccess(tokenStr);
         }catch(Exception e){
+            logger.error("登录异常:{}",e);
             return OrderResult.newError(ResultCode.USERNAME_OR_PASS_ERR);
         }
     }
